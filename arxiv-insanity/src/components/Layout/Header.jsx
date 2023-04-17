@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import GoogleIcon from "@mui/icons-material/Google";
 
 import citationImage from "../../assets/citationImage.png";
-import treeImage from "../../assets/logo.jpeg";
+import treeImage from "../../assets/ourlogo.jpeg";
 import classes from "./Header.module.css";
 
 const cardStyle = {
@@ -30,7 +30,7 @@ const Header = (props) => {
                     <CardMedia
                         sx={{ minHeight: "150px", paddingtop: "56.25%", marginTop:"10px"  }}
                         image={treeImage}
-                        title="Arxiv Insanity"
+                        title="Arxiv Insanity Card"
                     />
                     <CardContent sx={{ marginTop:"10px"}} >
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

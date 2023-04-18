@@ -8,18 +8,18 @@ import { Fragment } from "react";
 // import Button from "@mui/material/Button";
 // import GoogleIcon from "@mui/icons-material/Google";
 
-// import citationImage from "../../assets/citationImage.png";
-// import treeImage from "../../assets/ourlogo.jpeg";
-import classes from "./Header.module.css";
+// import citationImage from "../assets/citationImage.png";
+// import treeImage from "../assets/ourlogo.jpeg";
+// import classes from "../components/Layout/Header.module.css";
 
-const Header = (props) => {
+import Header from "../components/Layout/Header"
+
+const Home = () => {
   return (
     <Fragment>
-      <header className={classes.header}>
-        <h1>Arxiv Insanity</h1>
-      </header>
+        <Header />
     </Fragment>
   );
 };
 
-export default Header;
+export default Home;

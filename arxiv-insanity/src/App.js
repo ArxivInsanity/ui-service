@@ -1,10 +1,10 @@
-import { Fragment } from 'react';
-import Header from './components/Layout/Header';
+import { Fragment } from "react";
+import Login from './Pages/Login';
 
 function App() {
   return (
     <Fragment>
-      <Header/>
+      <Login />
     </Fragment>
   );
 }

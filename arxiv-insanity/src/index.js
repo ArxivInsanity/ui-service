@@ -3,7 +3,7 @@ import React from 'react';
 import './index.css';
 import App from './App';
 import Login from './Pages/Login';
-import Home from './Pages/Home';
+import Dashboard from './Pages/Dashboard';
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -14,7 +14,7 @@ root.render(
             <Routes>
                 <Route path="/" exact element={<App />} />
                 <Route path="login" element={<Login />} />
-                <Route path="home" element={<Home />} />
+                <Route path="dashboard" element={<Dashboard />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

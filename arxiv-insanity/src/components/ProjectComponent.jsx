@@ -11,6 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -61,15 +62,17 @@ const DataDisp = () => {
                 const results = response.data;
                 console.log(results)
                 getTableData();
-                // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
-                // results.map((result, id) => {
-                //     setTableData({"id":id,"name" :result.name,"lastModifiedAt" :result.lastModifiedAt});
-                // });
             })
             .catch((error) => {
                 console.log("Error Failed", error);
             })
         setOpen(false);
+    }
+
+    const onOpenProject = (e, row) => {
+        e.preventDefault();
+        console.log("Open Project ", row.name);
+        // window.open("http://localhost:3000/projects/" + row.name, "_blank");
     }
 
     const [tableData, setTableData] = useState([])
@@ -87,7 +90,7 @@ const DataDisp = () => {
                 // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
                 let tableData = []
                 results.map((result, id) => {
-                    return tableData.push({ "id": id, "name": result.name, "lastModifiedAt": result.lastModifiedAt, "description": result.description, "tags": result.tags }); 
+                    return tableData.push({ "id": id, "name": result.name, "lastModifiedAt": result.lastModifiedAt, "description": result.description, "tags": result.tags });
                 });
                 setTableData(tableData);
             })
@@ -108,10 +111,6 @@ const DataDisp = () => {
                 const results = response.data;
                 console.log(results)
                 getTableData();
-                // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
-                // results.map((result, id) => {
-                //     setTableData({"id":id,"name" :result.name,"lastModifiedAt" :result.lastModifiedAt});
-                // });
             })
             .catch((error) => {
                 console.log("Error Failed", error);
@@ -160,8 +159,8 @@ const DataDisp = () => {
                                         type="text"
                                         fullWidth
                                         variant="standard"
-                                        value={projectDescription}  
-                                        onChange={(e) => setProjectDescription(e.target.value)}                                       
+                                        value={projectDescription}
+                                        onChange={(e) => setProjectDescription(e.target.value)}
                                     />
                                     <TextField
                                         autoFocus
@@ -171,7 +170,7 @@ const DataDisp = () => {
                                         type="text"
                                         fullWidth
                                         variant="standard"
-                                        value={projectTags} 
+                                        value={projectTags}
                                         onChange={(e) => setProjectTags(e.target.value)}
                                     />
                                 </DialogContent>
@@ -180,7 +179,10 @@ const DataDisp = () => {
                                     <Button onClick={handleEditClose}>Edit</Button>
                                 </DialogActions>
                             </Dialog>
-                        </Box></>
+                        </Box>
+                        <IconButton size={"medium"} onClick={(e) => onOpenProject(e, params.row)} color='primary'>
+                            <OpenInNewIcon />
+                        </IconButton><Box sx={{ display: 'flex' }}></Box></>
                 );
             }
         }
@@ -200,6 +202,14 @@ const DataDisp = () => {
             <Grid item xs={8}>
                 <Box sx={{ height: 500, width: '100%', mt: 3 }}>
                     <DataGrid
+                        sx={{
+                            boxShadow: 2,
+                            border: 2,
+                            borderColor: 'warning.main',
+                            '& .MuiDataGrid-cell:hover': {
+                                color: 'primary.main',
+                            },
+                        }}
                         rows={tableData}
                         getRowId={(row) => row.name + row.lastModifiedAt}
                         columns={columns}

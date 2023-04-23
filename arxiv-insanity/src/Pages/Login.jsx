@@ -20,7 +20,7 @@ const cardStyle = {
 
 const getAuthGoogle = () => {
     console.log("getAuthGoogle");
-    window.open("http://localhost:8080/auth/google?redirect_uri=http://localhost:3000/Home","_self")
+    window.open("http://localhost:8080/auth/google?redirect_uri=http://localhost:3000/Dashboard","_self")
 }
 
 const Login = (props) => {

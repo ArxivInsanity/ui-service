@@ -25,6 +25,7 @@ export function QuickSearchToolbar() {
 
 const DataDisp = () => {
     const [open, setOpen] = React.useState(false);
+    const [openNew, setOpenNew] = React.useState(false);
     const [projectName, setProjectName] = React.useState("");
     const [projectDescription, setProjectDescription] = React.useState("");
     const [projectTags, setProjectTags] = React.useState("");
@@ -32,16 +33,27 @@ const DataDisp = () => {
 
     const handleClickOpen = (e, row) => {
         e.stopPropagation();
-        // console.log("value ",row.name);
-        setOpen(true);
+        console.log("Clicked edit ",row.name)
         setProjectName(row.name);
         setPrevProjectName(row.name);
         setProjectDescription(row.description);
         setProjectTags(row.tags);
+        setOpen(true);
+    };
+
+    const handleClickOpenForNewProject = () => {
+        setOpenNew(true);
+        setProjectName("");
+        setProjectDescription("");
+        setProjectTags("");
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleCloseNew = () => {
+        setOpenNew(false);
     };
 
     const handleEditClose = () => {
@@ -67,6 +79,29 @@ const DataDisp = () => {
                 console.log("Error Failed", error);
             })
         setOpen(false);
+    }
+
+    const onClickNewProject = () => {
+        console.log("onClickNewProject");
+        axios({
+            method: "post",
+            url: "http://localhost:8080/api/projects",
+            withCredentials: true,
+            data: {
+                "name": projectName,
+                "description": projectDescription,
+                "tags": projectTags
+            }
+        })
+            .then((response) => {
+                console.log("Created", response);
+                getTableData();
+                // window.location.reload();
+            })
+            .catch((error) => {
+                console.log("Error Failed", error);
+            })
+            setOpenNew(false);
     }
 
     const onOpenProject = (e, row) => {
@@ -119,7 +154,7 @@ const DataDisp = () => {
 
     const columns = [
         { field: 'name', headerName: 'Project Name', flex: 1, description: "The name of the project" },
-        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1, description: "The last modified date of the project" },
+        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1, description: "The last modified date of the project"},
         {
             field: "deleteAndEditButton",
             headerName: "Actions",
@@ -143,7 +178,6 @@ const DataDisp = () => {
                                     <TextField
                                         autoFocus
                                         margin="dense"
-                                        id="PEname"
                                         label="Project Name"
                                         type="text"
                                         fullWidth
@@ -154,7 +188,6 @@ const DataDisp = () => {
                                     <TextField
                                         autoFocus
                                         margin="dense"
-                                        id="PEdescription"
                                         label="Project Description"
                                         type="text"
                                         fullWidth
@@ -165,7 +198,6 @@ const DataDisp = () => {
                                     <TextField
                                         autoFocus
                                         margin="dense"
-                                        id="PEtags"
                                         label="Project tags"
                                         type="text"
                                         fullWidth
@@ -190,16 +222,64 @@ const DataDisp = () => {
 
     useEffect(() => {
         getTableData();
-    },
-        [])
+    }, [])
 
-    console.log(tableData)
+    // console.log(tableData)
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={2}>
             </Grid>
             <Grid item xs={8}>
+                <Box sx={{
+                    display: 'flex', justifyContent: 'center', mt: 2
+                }}>
+                    <Button variant="contained" startIcon={<OpenInNewIcon />} size="large" onClick={handleClickOpenForNewProject}>
+                        New Project
+                    </Button>
+                    <Dialog open={openNew} onClose={handleCloseNew}>
+                        <DialogTitle>Create new project</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                To add project, please enter the fields given below.
+                            </DialogContentText>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Project Name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                value={projectName}
+                                onChange={(e) => setProjectName(e.target.value)}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Project Description"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                value={projectDescription}
+                                onChange={(e) => setProjectDescription(e.target.value)}
+                            />
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                label="Project tags"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                value={projectTags}
+                                onChange={(e) => setProjectTags(e.target.value)}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseNew}>Cancel</Button>
+                            <Button onClick={onClickNewProject}>Create</Button>
+                        </DialogActions>
+                    </Dialog>
+                </Box>
                 <Box sx={{ height: 500, width: '100%', mt: 3 }}>
                     <DataGrid
                         showCellRightBorder={true}

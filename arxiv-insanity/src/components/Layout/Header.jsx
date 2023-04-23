@@ -7,11 +7,12 @@ import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-// import axios from "axios";
+import axios from "axios";
+import { useEffect } from 'react';
 
 import classes from "./Header.module.css";
 
-const settings = ['Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 function AppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -24,6 +25,31 @@ function AppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = (event) => {
+    // TODO logout , clear cookies here or local storage if we are passing token instead of cookies
+  };
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
+  const [userDetails, setUserDetails] = React.useState({});
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/auth/getUserInfo",
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log("Got user info", response);
+        if (response === "User not logged in") {
+          setIsUserLoggedIn(false);
+        } else {
+          setIsUserLoggedIn(true);
+          setUserDetails(response);
+        }
+      })
+      .catch((error) => {
+        console.log("Error Failed", error);
+      });
+  }, []);
 
   // const checkIfUserLoggedIn = () => {
   //   axios({
@@ -45,36 +71,37 @@ function AppBar() {
   return (
     <Fragment>
       <header className={classes.header}>
-        <h1>Arxiv Insanity</h1>
+        <h1 style={{margin: '0px'}}>Arxiv Insanity</h1>
         <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {isUserLoggedIn ? <Avatar alt="Remy Sharp" src={userDetails.data.profilePic} imgProps={{ referrerPolicy: "no-referrer" }}/> :
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />}
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: '45px' }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {settings.map((setting) => (
+              <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center" onClick={(e) => {handleLogout(e)}}>{setting}</Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
       </header>
     </Fragment>
   );

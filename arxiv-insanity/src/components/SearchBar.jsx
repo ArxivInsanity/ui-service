@@ -7,20 +7,20 @@ import "./SearchBar.css";
 export const SearchBar = ({ setResults }) => {
   const [input, setInput] = useState("");
 
-  const fetchData = (value) => {
-    fetch("http://localhost:8080/api/projects")
-      .then((response) => response.json())
-      .then((json) => {
-        const results = json.filter((project) => {
-          return (
-            project &&
-            project.name &&
-            project.name.toLowerCase().includes(value)
-          );
-        });
-        setResults(results);
-      });
-  };
+  // const fetchData = (value) => {
+  //   fetch("http://localhost:8080/api/projects")
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       const results = json.filter((project) => {
+  //         return (
+  //           project &&
+  //           project.name &&
+  //           project.name.toLowerCase().includes(value)
+  //         );
+  //       });
+  //       setResults(results);
+  //     });
+  // };
 
   const fetcProjectDetails = (value) => {
     axios({

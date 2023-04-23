@@ -1,16 +1,17 @@
 import { Fragment } from "react";
-import React, { useState } from 'react';
-import axios from "axios";
+// import React, { useState } from 'react';
+// import axios from "axios";
 
 // import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 // import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import Button from "@mui/material/Button";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+// import Button from "@mui/material/Button";
+// import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 import "./Dashboard.css";
-import { SearchBar } from "../components/SearchBar";
-import { SearchResultsList } from "../components/SearchResultsList";
+// import { SearchBar } from "../components/SearchBar";
+// import { SearchResultsList } from "../components/SearchResultsList";
+import SearchData from './ProjectPage'
+
 
 // import citationImage from "../assets/citationImage.png";
 // import treeImage from "../assets/ourlogo.jpeg";
@@ -19,21 +20,6 @@ import { SearchResultsList } from "../components/SearchResultsList";
 import Header from "../components/Layout/Header"
 
 function Dashboard() {
-  const [results, setResults] = useState([]);
-
-  const searchClicked = () => {
-    axios({
-      method: "get",
-      url: "http://localhost:8080/auth/getUserInfo",
-      withCredentials: true,
-    })
-    .then((response) => {
-      console.log("Got user info", response);
-    })
-    .catch((error) => {
-      console.log("Error Failed", error);
-    });
-  }
 
   return (
     <Fragment>
@@ -79,7 +65,7 @@ function Dashboard() {
 
       </Stack> */}
       <div className="App">
-        <div className="search-bar-container">
+        {/* <div className="search-bar-container">
           <SearchBar setResults={setResults} />
           {results && results.length > 0 && <SearchResultsList results={results} />}
         </div>
@@ -92,7 +78,8 @@ function Dashboard() {
           >
             <SearchOutlinedIcon /> Search
           </Button>
-        </div>
+        </div> */}
+        <SearchData />
       </div>
     </Fragment>
   );

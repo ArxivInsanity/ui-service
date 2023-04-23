@@ -118,8 +118,8 @@ const DataDisp = () => {
     };
 
     const columns = [
-        { field: 'name', headerName: 'Project Name', flex: 1 },
-        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1 },
+        { field: 'name', headerName: 'Project Name', flex: 1, description: "The name of the project" },
+        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1, description: "The last modified date of the project" },
         {
             field: "deleteAndEditButton",
             headerName: "Actions",
@@ -202,6 +202,8 @@ const DataDisp = () => {
             <Grid item xs={8}>
                 <Box sx={{ height: 500, width: '100%', mt: 3 }}>
                     <DataGrid
+                        showCellRightBorder={true}
+                        showColumnVerticalBorder={true}
                         sx={{
                             boxShadow: 2,
                             border: 2,

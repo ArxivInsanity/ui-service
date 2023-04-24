@@ -20,7 +20,7 @@ const cardStyle = {
 
 const getAuthGoogle = () => {
     console.log("getAuthGoogle");
-    window.open("http://localhost:8080/auth/google?redirect_uri=http://localhost:3000/Dashboard","_self")
+    window.open("http://localhost:8080/auth/google?redirect_uri=http://localhost:3000/auth","_self")
 }
 
 const Login = (props) => {
@@ -39,7 +39,7 @@ const Login = (props) => {
                     <CardContent sx={{ marginTop:"10px"}} >
                         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                             Please sign in with Google
-                        </Typography>
+                        </Typography> 
                     </CardContent>
                     <CardActions style={{justifyContent: 'center', marginBottom: '10px'}}>                   
                             <Button variant="contained" startIcon={<GoogleIcon />} size="large" onClick={getAuthGoogle}>

@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
-import ProjectPage from './components/ProjectComponent';
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Auth from './Pages/Auth';
+import MainPage from './Pages/MainPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,9 +15,10 @@ root.render(
         <BrowserRouter>
             <Routes>
                 <Route path="/" exact element={<App />} />
+                <Route path="auth" element={<Auth />} />
                 <Route path="login" element={<Login />} />
                 <Route path="dashboard" element={<Dashboard />} />
-                <Route path="project" element={<ProjectPage />} />
+                <Route path="project" element={<MainPage />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

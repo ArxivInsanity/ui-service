@@ -14,6 +14,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import axiosConfig from '../Util/AxiosConfig';
+import { useNavigate } from 'react-router-dom';
 
 export function QuickSearchToolbar() {
     return (
@@ -31,9 +33,11 @@ const DataDisp = () => {
     const [projectTags, setProjectTags] = React.useState("");
     const [prevProjectName, setPrevProjectName] = React.useState("");
 
+    const navigate = useNavigate();
+
     const handleClickOpen = (e, row) => {
         e.stopPropagation();
-        console.log("Clicked edit ",row.name)
+        console.log("Clicked edit ", row.name)
         setProjectName(row.name);
         setPrevProjectName(row.name);
         setProjectDescription(row.description);
@@ -59,102 +63,81 @@ const DataDisp = () => {
     const handleEditClose = () => {
         console.log("Project Name ", projectName);
         console.log("Prev Project Name ", prevProjectName);
-        axios({
-            method: "put",
-            url: "http://localhost:8080/api/projects/" + prevProjectName,
-            withCredentials: true,
-            data: {
+        axiosConfig.put("api/projects/" + prevProjectName,
+            {
                 "name": projectName,
                 "description": projectDescription,
                 "tags": projectTags
             }
+        ).then((response) => {
+            console.log("Edited", response);
+            const results = response.data;
+            console.log(results)
+            getTableData();
+        }).catch((error) => {
+            console.log("Error Failed", error);
         })
-            .then((response) => {
-                console.log("Edited", response);
-                const results = response.data;
-                console.log(results)
-                getTableData();
-            })
-            .catch((error) => {
-                console.log("Error Failed", error);
-            })
         setOpen(false);
     }
 
     const onClickNewProject = () => {
         console.log("onClickNewProject");
-        axios({
-            method: "post",
-            url: "http://localhost:8080/api/projects",
-            withCredentials: true,
-            data: {
+        axiosConfig.post("api/projects",
+            {
                 "name": projectName,
                 "description": projectDescription,
                 "tags": projectTags
             }
+        ).then((response) => {
+            console.log("Created", response);
+            getTableData();
+            // window.location.reload();
+        }).catch((error) => {
+            console.log("Error Failed", error);
         })
-            .then((response) => {
-                console.log("Created", response);
-                getTableData();
-                // window.location.reload();
-            })
-            .catch((error) => {
-                console.log("Error Failed", error);
-            })
-            setOpenNew(false);
+        setOpenNew(false);
     }
 
     const onOpenProject = (e, row) => {
         e.preventDefault();
         console.log("Open Project ", row.name);
+        navigate("/project", {state : {data: row}});
         // window.open("http://localhost:3000/projects/" + row.name, "_blank");
     }
 
     const [tableData, setTableData] = useState([])
 
     const getTableData = () => {
-        axios({
-            method: "get",
-            url: "http://localhost:8080/api/projects",
-            withCredentials: true,
+        axiosConfig.get("api/projects").then((response) => {
+            console.log("Got Collection Success", response);
+            const results = response.data;
+            console.log(results)
+            // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
+            let tableData = []
+            results.map((result, id) => {
+                return tableData.push({ "id": id, "name": result.name, "lastModifiedAt": result.lastModifiedAt, "description": result.description, "tags": result.tags });
+            });
+            setTableData(tableData);
+        }).catch((error) => {
+            console.log("Error Failed", error);
         })
-            .then((response) => {
-                console.log("Got Collection Success", response);
-                const results = response.data;
-                console.log(results)
-                // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
-                let tableData = []
-                results.map((result, id) => {
-                    return tableData.push({ "id": id, "name": result.name, "lastModifiedAt": result.lastModifiedAt, "description": result.description, "tags": result.tags });
-                });
-                setTableData(tableData);
-            })
-            .catch((error) => {
-                console.log("Error Failed", error);
-            })
     }
 
     const onButtonClick = (e, row) => {
         e.stopPropagation();
-        axios({
-            method: "delete",
-            url: "http://localhost:8080/api/projects/" + row.name,
-            withCredentials: true,
+        axiosConfig.delete("api/projects/" + row.name).then((response) => {
+            console.log("Deleted", response);
+            const results = response.data;
+            console.log(results)
+            getTableData();
+        }).catch((error) => {
+            console.log("Error Failed", error);
         })
-            .then((response) => {
-                console.log("Deleted", response);
-                const results = response.data;
-                console.log(results)
-                getTableData();
-            })
-            .catch((error) => {
-                console.log("Error Failed", error);
-            })
     };
 
     const columns = [
         { field: 'name', headerName: 'Project Name', flex: 1, description: "The name of the project" },
-        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1, description: "The last modified date of the project"},
+        { field: 'lastModifiedAt', headerName: 'Last modified', flex: 1, description: "The last modified date of the project" },
         {
             field: "deleteAndEditButton",
             headerName: "Actions",

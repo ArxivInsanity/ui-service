@@ -11,6 +11,7 @@ import axios from "axios";
 import { useEffect } from 'react';
 
 import classes from "./Header.module.css";
+import axiosConfig from "../../Util/AxiosConfig";
 
 const settings = ['Logout'];
 
@@ -32,11 +33,7 @@ function AppBar() {
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
   const [userDetails, setUserDetails] = React.useState({});
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:8080/auth/getUserInfo",
-      withCredentials: true,
-    })
+    axiosConfig.get("/auth/getUserInfo")
       .then((response) => {
         console.log("Got user info", response);
         if (response === "User not logged in") {
@@ -71,11 +68,11 @@ function AppBar() {
   return (
     <Fragment>
       <header className={classes.header}>
-        <h1 style={{margin: '0px'}}>Arxiv Insanity</h1>
+        <h1 style={{ margin: '0px' }}>Arxiv Insanity</h1>
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              {isUserLoggedIn ? <Avatar alt="Remy Sharp" src={userDetails.data.profilePic} imgProps={{ referrerPolicy: "no-referrer" }}/> :
+              {isUserLoggedIn ? <Avatar alt="Remy Sharp" src={userDetails.data.profilePic} imgProps={{ referrerPolicy: "no-referrer" }} /> :
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />}
             </IconButton>
           </Tooltip>
@@ -97,7 +94,7 @@ function AppBar() {
           >
             {settings.map((setting) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" onClick={(e) => {handleLogout(e)}}>{setting}</Typography>
+                <Typography textAlign="center" onClick={(e) => { handleLogout(e) }}>{setting}</Typography>
               </MenuItem>
             ))}
           </Menu>

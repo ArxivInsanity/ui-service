@@ -15,6 +15,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import axiosConfig from '../Util/AxiosConfig';
+import { useNavigate } from 'react-router-dom';
 
 export function QuickSearchToolbar() {
     return (
@@ -31,6 +32,8 @@ const DataDisp = () => {
     const [projectDescription, setProjectDescription] = React.useState("");
     const [projectTags, setProjectTags] = React.useState("");
     const [prevProjectName, setPrevProjectName] = React.useState("");
+
+    const navigate = useNavigate();
 
     const handleClickOpen = (e, row) => {
         e.stopPropagation();
@@ -98,6 +101,7 @@ const DataDisp = () => {
     const onOpenProject = (e, row) => {
         e.preventDefault();
         console.log("Open Project ", row.name);
+        navigate("/project", {state : {data: row}});
         // window.open("http://localhost:3000/projects/" + row.name, "_blank");
     }
 

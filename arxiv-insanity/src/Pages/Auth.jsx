@@ -5,7 +5,6 @@ const Auth = () => {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
     useEffect(() => {
         const url = window.location.href;
-        console.log("URL: ", url.split("token=")[1]);
         sessionStorage.setItem("token", url.split("token=")[1]);
         setTimeout(() => {setIsUserLoggedIn(true) }, 1000);
     }, []);

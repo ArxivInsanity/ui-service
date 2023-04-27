@@ -7,3 +7,5 @@ The frontend service for the Arxiv Insanity application
 ### Add new Tags
 
 ### Search for the Papers with keywords
+
+### Select the seed paper

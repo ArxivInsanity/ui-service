@@ -8,10 +8,10 @@ import Typography from '@mui/material/Typography';
 import Button from "@mui/material/Button";
 import GoogleIcon from "@mui/icons-material/Google";
 
-import citationImage from "../assets/citationImage.png";
-import treeImage from "../assets/ourlogo.jpeg";
-import classes from "../components/Layout/Header.module.css";
-import Header from "../components/Layout/Header"
+import citationImage from "../Assets/citationImage.png";
+import treeImage from "../Assets/ourlogo.jpeg";
+import classes from "../Components/Layout/Header.module.css";
+import Header from "../Components/Layout/Header"
 
 const cardStyle = {
     display: "block",

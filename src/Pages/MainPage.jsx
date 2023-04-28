@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../components/Layout/Header';
+import Header from '../Components/Layout/Header';
 import { useLocation } from 'react-router-dom';
-import { ProjectBreadCrumbs } from '../components/ProjectBreadCrumbs';
+import { ProjectBreadCrumbs } from '../Components/ProjectBreadCrumbs';
 
 const MainPage = () => {
     const projectDetails = useLocation().state.data;

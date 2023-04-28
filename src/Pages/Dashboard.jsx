@@ -1,15 +1,15 @@
 import { Fragment, useEffect } from "react";
 
 import "./Dashboard.css";
-import SearchData from '../components/ProjectComponent'
+import SearchData from '../Components/ProjectComponent'
 import Box from '@mui/material/Box';
 
 
-// import citationImage from "../assets/citationImage.png";
-// import treeImage from "../assets/ourlogo.jpeg";
-// import classes from "../components/Layout/Header.module.css";
+// import citationImage from "../Assets/citationImage.png";
+// import treeImage from "../Assets/ourlogo.jpeg";
+// import classes from "../Components/Layout/Header.module.css";
 
-import Header from "../components/Layout/Header"
+import Header from "../Components/Layout/Header"
 
 function Dashboard() {
 

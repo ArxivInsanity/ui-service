@@ -40,7 +40,7 @@ const DataDisp = () => {
   const [openNew, setOpenNew] = React.useState(false);
   const [projectName, setProjectName] = React.useState("");
   const [projectDescription, setProjectDescription] = React.useState("");
-  const [projectTags, setProjectTags] = React.useState("");
+  const [projectTags, setProjectTags] = React.useState([]);
   const [prevProjectName, setPrevProjectName] = React.useState("");
 
   const navigate = useNavigate();
@@ -51,7 +51,10 @@ const DataDisp = () => {
     setProjectName(row.name);
     setPrevProjectName(row.name);
     setProjectDescription(row.description);
-    setProjectTags(row.tags);
+    if(row.tags === null) 
+      setProjectTags([]);
+    else
+      setProjectTags(row.tags);
     setOpen(true);
   };
 
@@ -98,7 +101,7 @@ const DataDisp = () => {
       .post("api/projects", {
         name: projectName,
         description: projectDescription,
-        tags: projectTags.toString(),
+        tags: projectTags,
       })
       .then((response) => {
         console.log("Created", response);
@@ -173,9 +176,9 @@ const DataDisp = () => {
       flex: 1,
       description: "Project Tags",
       renderCell: (cellValue) => {
-        if (cellValue.row.tags === "") return;
+        if (cellValue.row.tags === null) return;
         else {
-          return cellValue.row.tags.split(",").map((data, id) => {
+          return cellValue.row.tags.map((data, id) => {
             return (
               <ListItem key={id}>
                 <Chip label={data} size="small" variant="outlined" />
@@ -238,7 +241,7 @@ const DataDisp = () => {
                     value={projectDescription}
                     onChange={(e) => setProjectDescription(e.target.value)}
                   />
-                  <TextField
+                  {/* <TextField
                     autoFocus
                     margin="dense"
                     label="Project tags"
@@ -247,11 +250,21 @@ const DataDisp = () => {
                     variant="standard"
                     value={projectTags}
                     onChange={(e) => setProjectTags(e.target.value)}
+                  /> */}
+                  <MuiChipsInput
+                    autoFocus
+                    margin="dense"
+                    label="Project tags"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    value={projectTags}
+                    onChange={(chips) => setProjectTags(chips)}
                   />
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleEditClose}>Edit</Button>
+                  <Button onClick={handleEditClose}>Save</Button>
                 </DialogActions>
               </Dialog>
             </Box>

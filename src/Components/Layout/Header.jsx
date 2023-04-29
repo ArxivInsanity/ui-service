@@ -7,7 +7,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import axios from "axios";
 import { useEffect } from 'react';
 
 import classes from "./Header.module.css";

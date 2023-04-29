@@ -11,7 +11,7 @@ import MainPage from './Pages/MainPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
+    
         <BrowserRouter>
             <Routes>
                 <Route path="/" exact element={<App />} />
@@ -21,5 +21,4 @@ root.render(
                 <Route path="project" element={<MainPage />} />
             </Routes>
         </BrowserRouter>
-    </React.StrictMode>
 );

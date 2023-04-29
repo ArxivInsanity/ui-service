@@ -27,3 +27,8 @@ node_modules
 coverage
 env-config.js
 build
+
+#Terraform 
+.terraform
+__debug_bin
+.terraform.lock.hcl

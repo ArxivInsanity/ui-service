@@ -12,6 +12,7 @@ import citationImage from "../Assets/citationImage.png";
 import treeImage from "../Assets/ourlogo.jpeg";
 import classes from "../Components/Layout/Header.module.css";
 import Header from "../Components/Layout/Header"
+import { getBaseUrl } from "../api/ApiConstants";
 
 const cardStyle = {
     display: "block",
@@ -20,7 +21,8 @@ const cardStyle = {
 
 const getAuthGoogle = () => {
     console.log("getAuthGoogle");
-    window.open("http://localhost:8080/auth/google?redirect_uri=http://localhost:3000/auth","_self")
+    const ui_base_url = window.location.origin
+    window.open(getBaseUrl() + "/auth/google?redirect_uri=" +ui_base_url + "/auth","_self")
 }
 
 const Login = (props) => {

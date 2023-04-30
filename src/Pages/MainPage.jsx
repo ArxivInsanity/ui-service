@@ -16,9 +16,7 @@ const MainPage = () => {
     <>
       <div className="App">
         <Header />
-        <ProjectBreadCrumbs
-          projectName={projectDetails.name}
-        ></ProjectBreadCrumbs>
+        <ProjectBreadCrumbs projectName={projectDetails.name}></ProjectBreadCrumbs>
         <Box
           sx={{
             display: "flex",
@@ -29,38 +27,21 @@ const MainPage = () => {
           <Grid sx={{ flexGrow: 1 }} container spacing={1}>
             <Grid item xs={4}>
               <Paper sx={{ flexGrow: 1, borderRadius: 0 }}>
-                <PaperSearchBar
-                  seedPaper={seedPaperId}
-                  setSeedPaperFunc={setSeedPaperId}
-                />
+                <PaperSearchBar seedPaper={seedPaperId} setSeedPaperFunc={setSeedPaperId} />
               </Paper>
             </Grid>
             <Grid item xs={8}>
-              {seedPaperId != "" ?
-              <Grid container spacing={1} direction="column">
-                <Grid item xs={8}>
-                  <Paper
-                    id="container"
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
-                    <ProjectGraph paperId={seedPaperId} />
-                  </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                  <PaperFilter />
-                </Grid>
-              </Grid>
-              : <Paper
-              id="container"
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              </Paper>}
+              {seedPaperId != "" ? (
+                <ProjectGraph paperId={seedPaperId} />
+              ) : (
+                <Paper
+                  id="container"
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                ></Paper>
+              )}
             </Grid>
           </Grid>
         </Box>

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import G6 from "@antv/g6";
+import { Paper } from "@mui/material";
 
-const GraphComponent = ({data}) => {
-
+const GraphComponent = ({ data }) => {
   useEffect(() => {
     let graph = null;
-    graph = createGraph(data);
-    return() => {
-        graph.clear()
-    }
+    graph = createGraph(graph, data);
+    return () => {
+      graph?.destroy();
+    };
   }, [data]);
 
   const createGraph = (graph, data) => {
-    console.log("Data: ", data, "Graph: ", graph);
+    console.log("Graph Data: ", data, "Graph: ", graph);
     if (!graph && data) {
       data.edges.forEach((edge) => {
         edge.label = `References`;
@@ -34,6 +34,8 @@ const GraphComponent = ({data}) => {
       });
       graph = new G6.Graph({
         container: "container",
+        height: 600,
+        width: 1000,
         // translate the graph to align the canvas's center, support by v3.5.1
         fitCenter: true,
         fitView: true,
@@ -92,7 +94,15 @@ const GraphComponent = ({data}) => {
         });
       });
     }
+
+    return graph;
   };
+
+  return (
+    <Paper>
+      <div id="container"></div>
+    </Paper>
+  );
 };
 
 export default GraphComponent;

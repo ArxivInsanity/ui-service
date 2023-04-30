@@ -1,22 +1,11 @@
-import { Paper, Grid } from "@mui/material";
+import { Paper, Grid, Slider, Box } from "@mui/material";
 import React from "react";
+import Select from "react-select";
 
-const PaperFilter = () => {
+const GraphFilterComponent = () => {
   return (
-    <Paper>
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
-
-        </Grid>
-        <Grid item xs={4}>
-
-        </Grid>
-        <Grid item xs={4}>
-
-        </Grid>
-     </Grid>
-    </Paper>
+    <></>
   );
 };
 
-export default PaperFilter;
+export default GraphFilterComponent;

@@ -214,59 +214,6 @@ const DataDisp = () => {
               <Button onClick={(e) => handleClickOpen(e, params.row)}>
                 <EditIcon />
               </Button>
-              <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Edit Project details</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    To change the project details, please enter the fields given
-                    below.
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    label="Project Name"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={projectName}
-                    onChange={(e) => setProjectName(e.target.value)}
-                  />
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    label="Project Description"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={projectDescription}
-                    onChange={(e) => setProjectDescription(e.target.value)}
-                  />
-                  {/* <TextField
-                    autoFocus
-                    margin="dense"
-                    label="Project tags"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={projectTags}
-                    onChange={(e) => setProjectTags(e.target.value)}
-                  /> */}
-                  <MuiChipsInput
-                    autoFocus
-                    margin="dense"
-                    label="Project tags"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={projectTags}
-                    onChange={(chips) => setProjectTags(chips)}
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleEditClose}>Save</Button>
-                </DialogActions>
-              </Dialog>
             </Box>
             <IconButton
               size={"medium"}
@@ -289,7 +236,7 @@ const DataDisp = () => {
   // console.log(tableData)
 
   return (
-    <Grid container spacing={2}>
+    <><Grid container spacing={2}>
       <Grid item xs={2}></Grid>
       <Grid item xs={8}>
         <Box
@@ -321,8 +268,7 @@ const DataDisp = () => {
                 fullWidth
                 variant="standard"
                 value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-              />
+                onChange={(e) => setProjectName(e.target.value)} />
               <TextField
                 autoFocus
                 margin="dense"
@@ -331,8 +277,7 @@ const DataDisp = () => {
                 fullWidth
                 variant="standard"
                 value={projectDescription}
-                onChange={(e) => setProjectDescription(e.target.value)}
-              />
+                onChange={(e) => setProjectDescription(e.target.value)} />
               <MuiChipsInput
                 autoFocus
                 margin="dense"
@@ -341,8 +286,7 @@ const DataDisp = () => {
                 fullWidth
                 variant="standard"
                 value={projectTags}
-                onChange={(chips) => setProjectTags(chips)}
-              />
+                onChange={(chips) => setProjectTags(chips)} />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseNew}>Cancel</Button>
@@ -367,12 +311,50 @@ const DataDisp = () => {
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            slots={{ toolbar: QuickSearchToolbar }}
-          />
+            slots={{ toolbar: QuickSearchToolbar }} />
         </Box>
       </Grid>
       <Grid item xs={2}></Grid>
-    </Grid>
+    </Grid><Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Edit Project details</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To change the project details, please enter the fields given
+            below.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Project Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)} />
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Project Description"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)} />
+          <MuiChipsInput
+            autoFocus
+            margin="dense"
+            label="Project tags"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={projectTags}
+            onChange={(chips) => setProjectTags(chips)} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleEditClose}>Save</Button>
+        </DialogActions>
+      </Dialog></>
   );
 };
 

@@ -22,7 +22,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const SeedPaperCard = ({ seedPaperDetails }) => {
-  //   const [seedPaperData, setSeedPaperData] = useState({});
+  const [seedPaperData, setSeedPaperData] = useState("");
   const [openRead, setOpenRead] = React.useState(false);
 
   const handleClose = () => {
@@ -34,6 +34,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
   const openReadPanel = (e, row) => {
     e.stopPropagation();
     console.log("Open Read Panel ", row);
+    setSeedPaperData(row.title);
     setOpenRead(true);
   };
 
@@ -221,6 +222,15 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           </Box>
         </CardContent>
       </Card>
+      <Dialog open={openRead} onClose={handleClose}>
+        <DialogTitle>Edit Project details</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{seedPaperData}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

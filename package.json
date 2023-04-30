@@ -23,8 +23,8 @@
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
-    "web-vitals": "^0.2.4",
-    "react-select": "5.7.2"
+    "react-select": "^5.7.2",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "chmod +x ./env.sh && sh ./env.sh && mv env-config.js ./public/ && react-scripts start",

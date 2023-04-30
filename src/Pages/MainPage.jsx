@@ -38,7 +38,7 @@ const MainPage = () => {
               <Paper
                 id="container"
                 sx={{
-                  width: 1000,
+                  width: 950,
                   height: 600,
                 }}
               >

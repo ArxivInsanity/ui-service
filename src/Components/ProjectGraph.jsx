@@ -24,8 +24,12 @@ const ProjectGraph = ({ paperId }) => {
   }, [paperId]);
 
   const drawGraph = (graph, data) => {
-    console.log("Data: ", data, "Graph: ", graph);
+    let d = document.getElementById("container");
+    if(d.childNodes.length > 0){
+        d.removeChild(d.childNodes[0]);
+    }
     if (!graph && data) {
+      console.log("Data: ", data, "Graph: ", graph);
       data.edges.forEach((edge) => {
         edge.label = `References`;
       });
@@ -44,6 +48,7 @@ const ProjectGraph = ({ paperId }) => {
         });
         node.size = Math.sqrt(node.size) * 5;
       });
+
       graph = new G6.Graph({
         container: "container",
         // translate the graph to align the canvas's center, support by v3.5.1

@@ -1,0 +1,1 @@
+export const getBaseUrl = () => window._env_.API_URL

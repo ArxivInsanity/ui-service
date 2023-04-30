@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  sample:
+    container_name: ui-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    environment:
+      - API_URL=http://localhost:8080  #Url of the backend application

@@ -6,6 +6,7 @@ import { ProjectBreadCrumbs } from "../Components/ProjectBreadCrumbs";
 import { Box, Paper, Typography } from "@mui/material";
 import { PaperSearchBar } from "../Components/PaperSearchBar";
 import ProjectGraph from "../Components/ProjectGraph";
+import PaperFilter from "../Components/PaperFilter";
 
 const MainPage = () => {
   const [seedPaperId, setSeedPaperId] = useState("");
@@ -35,15 +36,31 @@ const MainPage = () => {
               </Paper>
             </Grid>
             <Grid item xs={8}>
-              <Paper
-                id="container"
-                sx={{
-                  width: 1000,
-                  height: 600,
-                }}
-              >
-                <ProjectGraph paperId={seedPaperId} />
-              </Paper>
+              {seedPaperId != "" ?
+              <Grid container spacing={1} direction="column">
+                <Grid item xs={8}>
+                  <Paper
+                    id="container"
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <ProjectGraph paperId={seedPaperId} />
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <PaperFilter />
+                </Grid>
+              </Grid>
+              : <Paper
+              id="container"
+              sx={{
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              </Paper>}
             </Grid>
           </Grid>
         </Box>

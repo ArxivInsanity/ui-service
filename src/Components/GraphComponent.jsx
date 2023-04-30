@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import G6 from "@antv/g6";
 import { Paper } from "@mui/material";
+import axios from "axios";
+import axiosConfig from "../Util/AxiosConfig";
+import PaperDetailsModal from "./PaperDetailsModal";
 
 const GraphComponent = ({ data }) => {
+  const [openPaperDetailsModal, setOpenPaperDetailsModal] = useState(false);
+  const [readingPaperDetails, setReadingPaperDetails] = useState({});
+
   useEffect(() => {
     let graph = null;
     graph = createGraph(graph, data);
@@ -86,6 +92,19 @@ const GraphComponent = ({ data }) => {
 
       graph.on("node:click", (evt) => {
         const { item } = evt;
+        console.log("Node Item: ", item._cfg.id);
+        axiosConfig
+          .get("/api/papers/" + item._cfg.id)
+          .then((response) => {
+            console.log("Reading Paper Details : ", response);
+            if (response?.data?.data !== null) {
+              setReadingPaperDetails(response?.data?.data);
+              setOpenPaperDetailsModal(true)
+            }
+          })
+          .catch((error) => {
+            console.log("Error Failed", error);
+          });
         graph.setItemState(item, "selected", true);
       });
       graph.on("canvas:click", (evt) => {
@@ -99,9 +118,18 @@ const GraphComponent = ({ data }) => {
   };
 
   return (
-    <Paper>
-      <div id="container"></div>
-    </Paper>
+    <>
+      <Paper>
+        <div id="container"></div>
+      </Paper>
+      <PaperDetailsModal
+        openRead={openPaperDetailsModal}
+        handleClose={() => {
+          setOpenPaperDetailsModal(false);
+        }}
+        refData={readingPaperDetails}
+      />
+    </>
   );
 };
 

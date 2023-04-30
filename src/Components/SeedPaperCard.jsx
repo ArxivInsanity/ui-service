@@ -5,14 +5,7 @@ import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import React, { useCallback, useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import axiosConfig from "../Util/AxiosConfig";
 
-const authors = ["John Doe", "John Doe", "John Doe", "John Doe"];
-
-const abstract =
-  "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eumquasi quidem quibusdam.";
-
-const year = "2023";
 
 const SeedPaperCard = ({ seedPaperDetails }) => {
   //   const [seedPaperData, setSeedPaperData] = useState({});

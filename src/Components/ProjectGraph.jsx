@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
-import { Paper, Grid, Box, Slider, Button } from "@mui/material";
+import {
+  Paper,
+  Grid,
+  Box,
+  Slider,
+  Button,
+  Typography,
+  FormControl,
+} from "@mui/material";
 import axiosConfig from "../Util/AxiosConfig";
 import GraphComponent from "./GraphComponent";
 import Select from "react-select";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const ProjectGraph = ({ paperId }) => {
   const [data, setData] = useState(null);
 
   // filter states
-  const [authorList, setAuthorList] = useState([
-    { label: "Pawan", value: 1 },
-    { label: "AC", value: 2 },
-    { label: "Anush", value: 3 },
-  ]);
+  const [authorList, setAuthorList] = useState([]);
   const [authorFilterList, setAuthorFilterList] = useState([]);
   const [yearRange, setYearRange] = useState([1800, 2023]);
   const [minMaxYear, setMinMaxYear] = useState([1800, 2023]);
@@ -89,22 +94,48 @@ const ProjectGraph = ({ paperId }) => {
             <Paper>
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                  <p>Auhtor</p>
-                  <Select
-                    id="authorSearch"
-                    isMulti
-                    options={authorList}
-                    onChange={(newValue) => {
-                      setAuthorFilterList(newValue.map((author) => author.value));
+                  <Typography
+                    sx={{
+                      m: 1,
+                      fontSize: 14,
+                      fontWeight: "bold",
                     }}
-                  />
+                    color="#8a2b06"
+                  >
+                    Auhtor
+                  </Typography>
+                  <Box sx={{ width: 300, pl: 1, mb: 1 }}>
+                    <Select
+                      id="authorSearch"
+                      isMulti
+                      options={authorList}
+                      onChange={(newValue) => {
+                        setAuthorFilterList(
+                          newValue.map((author) => author.value)
+                        );
+                      }}
+                      menuPlacement="auto"
+                    />
+                  </Box>
                 </Grid>
                 <Grid item xs={3}>
-                  <p>Year</p>
+                  <Typography
+                    sx={{
+                      m: 1,
+                      fontSize: 14,
+                      fontWeight: "bold",
+                    }}
+                    color="#8a2b06"
+                  >
+                    Year
+                  </Typography>
                   <Box sx={{ width: 200, pl: 2 }}>
                     <Slider
                       min={minMaxYear[0]}
                       max={minMaxYear[1]}
+                      sx={{
+                        mt: 0.5,
+                      }}
                       value={yearRange}
                       onChange={(event, newValue) => {
                         setYearRange(newValue);
@@ -114,12 +145,24 @@ const ProjectGraph = ({ paperId }) => {
                   </Box>
                 </Grid>
                 <Grid item xs={3}>
-                  <p>Min Citation</p>
+                  <Typography
+                    sx={{
+                      m: 1,
+                      fontSize: 14,
+                      fontWeight: "bold",
+                    }}
+                    color="#8a2b06"
+                  >
+                    Min Citation
+                  </Typography>
                   <Box sx={{ width: 200, pl: 2 }}>
                     <Slider
                       min={0}
                       max={300}
                       value={minCitation}
+                      sx={{
+                        mt: 0.5,
+                      }}
                       onChange={(event, newValue) => {
                         setMinCitation(newValue);
                       }}
@@ -129,11 +172,19 @@ const ProjectGraph = ({ paperId }) => {
                 </Grid>
                 <Grid container item xs={2} alignItems={"center"}>
                   <Button
-                    variant="outlined"
                     id="apply-filter"
                     alignItems={"center"}
-                    color="info"
+                    variant="outlined"
+                    size="medium"
+                    color="primary"
+                    sx={{
+                      mt: 2,
+                      fontSize: 10,
+                      border: 1,
+                      boxShadow: 10,
+                    }}
                     onClick={applyFilterOnClick}
+                    startIcon={<FilterAltIcon />}
                   >
                     Apply Filter
                   </Button>

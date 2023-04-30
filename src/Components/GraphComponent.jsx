@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import G6 from "@antv/g6";
 import { Paper } from "@mui/material";
-import axios from "axios";
 import axiosConfig from "../Util/AxiosConfig";
 import PaperDetailsModal from "./PaperDetailsModal";
 
@@ -40,8 +39,8 @@ const GraphComponent = ({ data }) => {
       });
       graph = new G6.Graph({
         container: "container",
-        height: 700,
-        width: 1000,
+        height: 630,
+        width: 950,
         // translate the graph to align the canvas's center, support by v3.5.1
         fitCenter: true,
         fitView: true,
@@ -99,7 +98,7 @@ const GraphComponent = ({ data }) => {
             console.log("Reading Paper Details : ", response);
             if (response?.data?.data !== null) {
               setReadingPaperDetails(response?.data?.data);
-              setOpenPaperDetailsModal(true)
+              setOpenPaperDetailsModal(true);
             }
           })
           .catch((error) => {

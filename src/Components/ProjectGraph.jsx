@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import G6 from "@antv/g6";
 import axiosConfig from "../Util/AxiosConfig";
-import { Paper } from "@mui/material";
 
 const ProjectGraph = ({ paperId }) => {
   //   let data = null;

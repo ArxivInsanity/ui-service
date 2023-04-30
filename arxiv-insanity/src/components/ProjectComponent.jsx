@@ -40,7 +40,7 @@ const DataDisp = () => {
   const [openNew, setOpenNew] = React.useState(false);
   const [projectName, setProjectName] = React.useState("");
   const [projectDescription, setProjectDescription] = React.useState("");
-  const [projectTags, setProjectTags] = React.useState("");
+  const [projectTags, setProjectTags] = React.useState([]);
   const [prevProjectName, setPrevProjectName] = React.useState("");
 
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ const DataDisp = () => {
     setOpenNew(true);
     setProjectName("");
     setProjectDescription("");
-    setProjectTags("");
+    setProjectTags([]);
   };
 
   const handleClose = () => {
@@ -98,7 +98,7 @@ const DataDisp = () => {
       .post("api/projects", {
         name: projectName,
         description: projectDescription,
-        tags: projectTags.toString(),
+        tags: projectTags,
       })
       .then((response) => {
         console.log("Created", response);
@@ -173,9 +173,9 @@ const DataDisp = () => {
       flex: 1,
       description: "Project Tags",
       renderCell: (cellValue) => {
-        if (cellValue.row.tags === "") return;
+        if (cellValue.row.tags === null) return;
         else {
-          return cellValue.row.tags.split(",").map((data, id) => {
+          return cellValue.row.tags.map((data, id) => {
             return (
               <ListItem key={id}>
                 <Chip label={data} size="small" variant="outlined" />
@@ -238,7 +238,7 @@ const DataDisp = () => {
                     value={projectDescription}
                     onChange={(e) => setProjectDescription(e.target.value)}
                   />
-                  <TextField
+                  <MuiChipsInput
                     autoFocus
                     margin="dense"
                     label="Project tags"
@@ -246,7 +246,7 @@ const DataDisp = () => {
                     fullWidth
                     variant="standard"
                     value={projectTags}
-                    onChange={(e) => setProjectTags(e.target.value)}
+                    onChange={(chips) => setProjectTags(chips)}
                   />
                 </DialogContent>
                 <DialogActions>
@@ -273,7 +273,6 @@ const DataDisp = () => {
     getTableData();
   }, []);
 
-  // console.log(tableData)
 
   return (
     <Grid container spacing={2}>
@@ -320,16 +319,6 @@ const DataDisp = () => {
                 value={projectDescription}
                 onChange={(e) => setProjectDescription(e.target.value)}
               />
-              {/* <TextField
-                                autoFocus
-                                margin="dense"
-                                label="Project tags"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                value={projectTags}
-                                onChange={(e) => setProjectTags(e.target.value)}
-                            /> */}
               <MuiChipsInput
                 autoFocus
                 margin="dense"

@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import Select, { components } from "react-select";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosConfig from "../Util/AxiosConfig";
 import SeedPaperCard from "./SeedPaperCard";
@@ -8,7 +8,11 @@ import SeedPaperCard from "./SeedPaperCard";
 export const PaperSearchBar = ({ seedPaper, setSeedPaperFunc }) => {
   const [searchTerm, setSearchTerm] = useState("");
     const [data, setData] = useState([]);
-    const [seedPaperData, setSeedPaperData] = useState({});
+  const [seedPaperData, setSeedPaperData] = useState({});
+  
+  // useEffect(() => {
+  //   console.log(seedPaper)
+  // },[seedPaper]);
 
   const getPaperDetails = (seedPaperDetails) => {
     axiosConfig
@@ -85,11 +89,11 @@ export const PaperSearchBar = ({ seedPaper, setSeedPaperFunc }) => {
         styles={{
           control: (baseStyles) => ({
             ...baseStyles,
-            fontSize: 12,
+            fontSize: 14,
           }),
           menu: (baseStyles) => ({
             ...baseStyles,
-            fontSize: 12,
+            fontSize: 14,
           }),
         }}
         onInputChange={(newInput) => {

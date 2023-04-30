@@ -3,11 +3,10 @@ import G6 from "@antv/g6";
 import axiosConfig from "../Util/AxiosConfig";
 
 const ProjectGraph = ({ paperId }) => {
-  //   let data = null;
   const [data, setData] = useState(null);
 
-  const width = 1000;
-  const height = 600;
+  const width = "100%";
+  const height = "100%";
   let graph = null;
   // const { predictLayout, confidence } = await GraphLayoutPredict.predict(data);
   useEffect(() => {
@@ -22,7 +21,7 @@ const ProjectGraph = ({ paperId }) => {
       .catch((error) => {
         console.log("Error Failed", error);
       });
-  }, []);
+  }, [paperId]);
 
   const drawGraph = (graph, data) => {
     console.log("Data: ", data, "Graph: ", graph);
@@ -47,8 +46,6 @@ const ProjectGraph = ({ paperId }) => {
       });
       graph = new G6.Graph({
         container: "container",
-        width,
-        height,
         // translate the graph to align the canvas's center, support by v3.5.1
         fitCenter: true,
         fitView: true,

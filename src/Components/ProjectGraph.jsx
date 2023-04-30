@@ -3,10 +3,9 @@ import G6 from "@antv/g6";
 import axiosConfig from "../Util/AxiosConfig";
 import { Paper } from "@mui/material";
 
-const ProjectGraph = () => {
+const ProjectGraph = ({ paperId }) => {
   //   let data = null;
   const [data, setData] = useState(null);
-  const [seedPaper, setSeedPapaer] = useState(null);
 
   const width = 1000;
   const height = 600;
@@ -14,7 +13,7 @@ const ProjectGraph = () => {
   // const { predictLayout, confidence } = await GraphLayoutPredict.predict(data);
   useEffect(() => {
     axiosConfig
-      .get("api/graph/" + "649def34f8be52c8b66281af98ae884c09aef38b")
+      .get("api/graph/" + paperId)
       .then((response) => {
         console.log("Graph Data", response);
         setData(response.data.data);
@@ -41,7 +40,7 @@ const ProjectGraph = () => {
       data.nodes.forEach((node) => {
         node.donutColorMap = colors;
         node.size = 0;
-        node.label = node.label.substring(0, 30) + "..."
+        node.label = node.label.substring(0, 30) + "...";
         Object.keys(node.donutAttrs).forEach((key) => {
           node.size += node.donutAttrs[key];
         });
@@ -111,15 +110,7 @@ const ProjectGraph = () => {
     }
   };
 
-  return (
-    <Paper
-      id="container"
-      sx={{
-        width: 1000,
-        height: 600,
-      }}
-    ></Paper>
-  );
+  return;
 };
 
 export default ProjectGraph;

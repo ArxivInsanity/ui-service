@@ -333,16 +333,6 @@ const DataDisp = () => {
                 value={projectDescription}
                 onChange={(e) => setProjectDescription(e.target.value)}
               />
-              {/* <TextField
-                                autoFocus
-                                margin="dense"
-                                label="Project tags"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                value={projectTags}
-                                onChange={(e) => setProjectTags(e.target.value)}
-                            /> */}
               <MuiChipsInput
                 autoFocus
                 margin="dense"

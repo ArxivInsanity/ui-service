@@ -8,13 +8,12 @@ import Paper from "@mui/material/Paper";
 import styled from "@mui/material/styles/styled";
 import ProjectGraph from "../Components/ProjectGraph";
 
-
 const MainPage = () => {
   const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
   }));
   const projectDetails = useLocation().state.data;
@@ -33,7 +32,17 @@ const MainPage = () => {
           <Grid item xs={8}>
             <Item>
               <h1>Project Graph Representation</h1>
-              <ProjectGraph />
+              <Paper
+                id="container"
+                sx={{
+                  width: 1000,
+                  height: 600,
+                }}
+              >
+                <ProjectGraph
+                  paperId={"649def34f8be52c8b66281af98ae884c09aef38b"}
+                />
+              </Paper>
             </Item>
           </Grid>
         </Grid>

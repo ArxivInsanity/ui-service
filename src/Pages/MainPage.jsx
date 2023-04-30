@@ -3,10 +3,9 @@ import Header from "../Components/Layout/Header";
 import { useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { ProjectBreadCrumbs } from "../Components/ProjectBreadCrumbs";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { PaperSearchBar } from "../Components/PaperSearchBar";
 import ProjectGraph from "../Components/ProjectGraph";
-import PaperFilter from "../Components/PaperFilter";
 
 const MainPage = () => {
   const [seedPaperId, setSeedPaperId] = useState("");
@@ -16,7 +15,9 @@ const MainPage = () => {
     <>
       <div className="App">
         <Header />
-        <ProjectBreadCrumbs projectName={projectDetails.name}></ProjectBreadCrumbs>
+        <ProjectBreadCrumbs
+          projectName={projectDetails.name}
+        ></ProjectBreadCrumbs>
         <Box
           sx={{
             display: "flex",
@@ -27,11 +28,12 @@ const MainPage = () => {
           <Grid sx={{ flexGrow: 1 }} container spacing={1}>
             <Grid item xs={4}>
               <Paper sx={{ flexGrow: 1, borderRadius: 0 }}>
-                <PaperSearchBar seedPaper={seedPaperId} setSeedPaperFunc={setSeedPaperId} />
+                {/* <PaperSearchBar seedPaper={seedPaperId} setSeedPaperFunc={setSeedPaperId} /> */}
+                <PaperSearchBar setSeedPaperFunc={setSeedPaperId}/>
               </Paper>
             </Grid>
             <Grid item xs={8}>
-              {seedPaperId != "" ? (
+              {seedPaperId !== "" ? (
                 <ProjectGraph paperId={seedPaperId} />
               ) : (
                 <Paper

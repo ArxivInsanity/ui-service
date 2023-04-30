@@ -5,7 +5,7 @@ export const ProjectBreadCrumbs = ({ projectName }) => {
   console.log(projectName);
   return (
     <Box m={1}>
-          <Breadcrumbs aria-label="breadcrumb" separator={ <NavigateNextIcon fontsize='small'/>}>
+          <Breadcrumbs aria-label="breadcrumb" separator={ <NavigateNextIcon fontSize='small'/>}>
         <Link underline="hover" href="/dashboard">
           Home
         </Link>

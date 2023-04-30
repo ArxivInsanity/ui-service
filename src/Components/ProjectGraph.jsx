@@ -5,8 +5,8 @@ import axiosConfig from "../Util/AxiosConfig";
 const ProjectGraph = ({ paperId }) => {
   const [data, setData] = useState(null);
 
-  const width = "100%";
-  const height = "100%";
+  const width = 1100;
+  const height = 600;
   let graph = null;
   // const { predictLayout, confidence } = await GraphLayoutPredict.predict(data);
   useEffect(() => {
@@ -51,6 +51,8 @@ const ProjectGraph = ({ paperId }) => {
 
       graph = new G6.Graph({
         container: "container",
+        width,
+        height,
         // translate the graph to align the canvas's center, support by v3.5.1
         fitCenter: true,
         fitView: true,

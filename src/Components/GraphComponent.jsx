@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import G6 from "@antv/g6";
 import { Paper } from "@mui/material";
 
@@ -34,7 +34,7 @@ const GraphComponent = ({ data }) => {
       });
       graph = new G6.Graph({
         container: "container",
-        height: 600,
+        height: 700,
         width: 1000,
         // translate the graph to align the canvas's center, support by v3.5.1
         fitCenter: true,

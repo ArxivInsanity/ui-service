@@ -17,6 +17,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import CreateIcon from '@mui/icons-material/Create';
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import axiosConfig from "../Util/AxiosConfig";
@@ -243,13 +244,13 @@ const DataDisp = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "end",
               mt: 2,
             }}
           >
             <Button
               variant="contained"
-              startIcon={<OpenInNewIcon />}
+              startIcon={<CreateIcon />}
               size="large"
               onClick={handleClickOpenForNewProject}
             >

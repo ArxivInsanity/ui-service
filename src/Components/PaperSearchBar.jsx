@@ -3,50 +3,17 @@ import Select, { components } from "react-select";
 import { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosConfig from "../Util/AxiosConfig";
-import SeedPaperCard from "./SeedPaperCard";
 
 export const PaperSearchBar = ({ setSeedPaperFunc }) => {
-  // const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
-  const [seedPaperData, setSeedPaperData] = useState({});
 
   useEffect(() => {
-    console.log("SHIT : ",data);
+    console.log("Set Options : ", data);
   }, [data]);
 
-  useEffect(() => {
-    console.log("2nd SHIT : ", seedPaperData);
-  }, [seedPaperData]);
-
-  const getPaperDetails = (seedPaperDetails) => {
-    axiosConfig
-      .get("/api/papers/" + seedPaperDetails)
-      .then((response) => {
-        console.log("Response : ", response);
-        if (response?.data?.data !== null) {
-          setSeedPaperData(response?.data?.data);
-        }
-        // let references = response?.data?.data;
-        // console.log("URL : ", references?.url);
-        // console.log("Year : ", references?.year);
-        // console.log("Abstract : ", references?.abstract);
-        // console.log("Title : ", references?.title);
-        // console.log(
-        //   "Authors : ",
-        //   references?.authors?.map((authorName) => authorName.name)
-        // );
-        // console.log(
-        //   "References : ",
-        //   references?.references?.filter((item) => item.paperId !== "")
-        // );
-      })
-      .catch((error) => {
-        console.log("Error Failed", error);
-      });
-  };
   const handleInputChange = (newInput) => {
     console.log("Handle onInputchange: ", newInput);
-    // setSearchTerm(newInput);
+
     if (newInput?.length >= 3) {
       axiosConfig
         .get("/api/papers/autocomplete", {
@@ -71,13 +38,11 @@ export const PaperSearchBar = ({ setSeedPaperFunc }) => {
           console.log("Error Failed", error);
         });
     }
-    
   };
   const handleChange = (paper) => {
     console.log("on Change : ", paper);
     if (paper?.value) {
       setSeedPaperFunc(paper.value);
-      getPaperDetails(paper.value);
     }
   };
   const DropdownIndicator = (props) => {
@@ -96,7 +61,7 @@ export const PaperSearchBar = ({ setSeedPaperFunc }) => {
         label="Search"
         components={{ DropdownIndicator }}
         placeholder={"Search Seed Papers"}
-        // value={searchTerm}
+        value={"Search Seed Papers"}
         styles={{
           control: (baseStyles) => ({
             ...baseStyles,
@@ -115,9 +80,6 @@ export const PaperSearchBar = ({ setSeedPaperFunc }) => {
         }}
         options={data}
       />
-      {Object.keys(seedPaperData).length > 0 &&
-        <SeedPaperCard seedPaperDetails={seedPaperData} />
-      }
     </Container>
   );
 };

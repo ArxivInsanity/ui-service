@@ -39,7 +39,7 @@ const GraphComponent = ({ data }) => {
       });
       graph = new G6.Graph({
         container: "container",
-        height: 630,
+        height: 720,
         width: 950,
         // translate the graph to align the canvas's center, support by v3.5.1
         animate: true,
@@ -84,6 +84,7 @@ const GraphComponent = ({ data }) => {
       graph.data(data);
       graph.render();
 
+      // Todo Animation
       // setInterval(() => {
       //   data.nodes.forEach((node) => {
       //     node.x += Math.random() * 50 - 25;

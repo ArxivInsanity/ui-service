@@ -22,12 +22,12 @@ const MainPage = () => {
           sx={{
             display: "flex",
             flexDirection: "row",
-            borderRadius: 0,
+            borderRadius: 1,
           }}
         >
           <Grid sx={{ flexGrow: 1 }} container spacing={1}>
             <Grid item xs={4}>
-              <Paper sx={{ flexGrow: 1, borderRadius: 0 }}>
+              <Paper sx={{ flexGrow: 1, borderRadius: 1 }}>
                 {/* <PaperSearchBar seedPaper={seedPaperId} setSeedPaperFunc={setSeedPaperId} /> */}
                 <PaperSearchBar setSeedPaperFunc={setSeedPaperId}/>
               </Paper>

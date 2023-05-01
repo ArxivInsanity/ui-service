@@ -6,7 +6,6 @@ import {
   Slider,
   Button,
   Typography,
-  FormControl,
 } from "@mui/material";
 import axiosConfig from "../Util/AxiosConfig";
 import GraphComponent from "./GraphComponent";
@@ -85,13 +84,13 @@ const ProjectGraph = ({ paperId }) => {
 
   return (
     <>
-      {paperId != "" ? (
+      {paperId !== "" ? (
         <Grid container spacing={1} direction="column">
           <Grid item xs={8}>
             <GraphComponent data={data} />
           </Grid>
           <Grid item xs={3}>
-            <Paper>
+            <Paper sx={{ mt: 1, height: 100, boxShadow: 2 }} >
               <Grid container spacing={1}>
                 <Grid item xs={4}>
                   <Typography
@@ -181,7 +180,7 @@ const ProjectGraph = ({ paperId }) => {
                       mt: 2,
                       fontSize: 10,
                       border: 1,
-                      boxShadow: 10,
+                      boxShadow: 4,
                     }}
                     onClick={applyFilterOnClick}
                     startIcon={<FilterAltIcon />}

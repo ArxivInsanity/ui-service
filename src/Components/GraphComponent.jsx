@@ -50,7 +50,7 @@ const GraphComponent = ({ data }) => {
         fitCenter: true,
         fitView: true,
         modes: {
-          default: ["drag-canvas", "drag-node", "zoom-canvas"],
+          default: ["drag-canvas", "drag-node"],
         },
         layout: {
           type: "force2",

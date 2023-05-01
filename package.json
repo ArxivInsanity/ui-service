@@ -21,10 +21,11 @@
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",
+    "react-particles": "2.9.3",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
-    "react-particles": "2.9.3",
+    "react-spinners": "^0.13.8",
     "tsparticles": "2.9.3",
     "web-vitals": "^0.2.4"
   },

@@ -10,6 +10,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import IconButton from "@mui/material/IconButton";
 import axiosConfig from "../Util/AxiosConfig";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { useState } from "react";
 
 const SeedPaperList = ({
   seedPapers,
@@ -17,6 +20,8 @@ const SeedPaperList = ({
   setProjectListFunc,
   projectName,
 }) => {
+  const [isDelete, setDelete] = useState(false);
+
   console.log("Called in Seed Papers List : ", seedPapers);
 
   const handleDeletePaper = (row) => {
@@ -34,6 +39,7 @@ const SeedPaperList = ({
           .then((response) => {
             console.log("Fetched seed paper : ", response);
             setProjectListFunc(response?.data);
+            setDelete(true);
           })
           .catch((error) => {
             console.log("Error Failed", error);
@@ -93,25 +99,43 @@ const SeedPaperList = ({
 
   return (
     <>
-      <Accordion sx={{ mt: 2 }}>
+      <Accordion
+        sx={{
+          mt: 1.5,
+          ml: 1,
+          mr: 1,
+          mb: 1,
+          p: 0,
+          boxShadow: 6,
+          borderRadius: 2,
+          "&.Mui-expanded": {
+            fontSize: 14,
+            marginTop: 1.5,
+            marginLeft: 1,
+            marginRight: 1,
+            marginBottom: 1,
+          },
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           sx={{
             height: 50,
             "&.Mui-expanded": {
+              fontSize: 14,
               minHeight: 30,
-              maxHeight: 30,
+              maxHeight: 50,
             },
           }}
         >
           <Typography
             sx={{
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: "bold",
             }}
             color="#8a2b06"
           >
-            Seed Papers
+            Seed Papers :
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -138,6 +162,15 @@ const SeedPaperList = ({
           </Box>
         </AccordionDetails>
       </Accordion>
+      <Snackbar
+        open={isDelete}
+        autoHideDuration={3000}
+        onClose={() => setDelete(false)}
+      >
+        <Alert severity="error" variant="filled" elevation={6}>
+          <strong>Alert - </strong> Seed Paper is Deleted !!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

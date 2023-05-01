@@ -152,7 +152,9 @@ const SeedPaperCard = ({
 
   return (
     <>
-      <Card sx={{ mt: 1 }}>
+      <Card
+        sx={{ mt: 3, ml: 1, mr: 1, mb: 1, p: 0, boxShadow: 6, borderRadius: 2 }}
+      >
         <CardContent>
           <Stack
             direction="row"
@@ -208,7 +210,9 @@ const SeedPaperCard = ({
             {seedPaperDetails?.title}
           </Typography>
           <Chip
-            label={"Year: " + seedPaperDetails?.year}
+            label={
+              "Year: " + (seedPaperDetails?.year ? seedPaperDetails?.year : "")
+            }
             size="medium"
             sx={{ mb: 1, fontWeight: "bold", color: "#8a2b06" }}
           />
@@ -332,8 +336,8 @@ const SeedPaperCard = ({
         autoHideDuration={3000}
         onClose={() => setSavePaper(false)}
       >
-        <Alert severity="success" sx={{ width: "100%" }}>
-          Seed Paper Added!
+        <Alert severity="success" variant="filled" elevation={6}>
+          <strong>Success - </strong> Seed Paper is Added !!
         </Alert>
       </Snackbar>
     </>

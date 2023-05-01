@@ -24,25 +24,25 @@ const ProjectGraph = ({ paperId }) => {
         .get("api/graph/" + paperId)
         .then((response) => {
           console.log("Graph Data", response);
-          let graphData = response.data.data;
+          let graphData = response?.data?.data;
           setData(graphData);
 
           // set filter params
           let tmpAuthorList = [];
           let maxYear = 0;
           let minYear = 2023;
-          graphData?.nodes.map((node) => {
-            node.authorList.map((authorName) => tmpAuthorList.push(authorName));
-            if (node.year > maxYear) {
-              maxYear = node.year;
+          graphData?.nodes?.map((node) => {
+            node?.authorList?.map((authorName) => tmpAuthorList.push(authorName));
+            if (node?.year > maxYear) {
+              maxYear = node?.year;
             }
-            if (node.year < minYear) {
-              minYear = node.year;
+            if (node?.year < minYear) {
+              minYear = node?.year;
             }
           });
           let uniqueAuthorList = [...new Set(tmpAuthorList)];
           setAuthorList(
-            uniqueAuthorList.map((author) => {
+            uniqueAuthorList?.map((author) => {
               return { value: author, label: author };
             })
           );

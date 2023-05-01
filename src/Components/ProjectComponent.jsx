@@ -17,7 +17,11 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
+import FolderIcon from "@mui/icons-material/Folder";
+import Typography from "@mui/material/Typography";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import axiosConfig from "../Util/AxiosConfig";
@@ -32,6 +36,9 @@ export function QuickSearchToolbar() {
 }
 
 const DataDisp = () => {
+  const [isCreated, setCreated] = React.useState(false);
+  const [isEdited, setEdited] = React.useState(false);
+  const [isDeleted, setDeleted] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = React.useState(false);
   const [projectName, setProjectName] = React.useState("");
@@ -81,6 +88,7 @@ const DataDisp = () => {
         const results = response.data;
         console.log(results);
         getTableData();
+        setEdited(true);
       })
       .catch((error) => {
         console.log("Error Failed", error);
@@ -100,7 +108,7 @@ const DataDisp = () => {
       .then((response) => {
         console.log("Created", response);
         getTableData();
-        // window.location.reload();
+        setCreated(true);
       })
       .catch((error) => {
         console.log("Error Failed", error);
@@ -150,6 +158,7 @@ const DataDisp = () => {
         const results = response.data;
         console.log(results);
         getTableData();
+        setDeleted(true);
       })
       .catch((error) => {
         console.log("Error Failed", error);
@@ -162,6 +171,27 @@ const DataDisp = () => {
       headerName: "Project Name",
       flex: 0.75,
       description: "The name of the project",
+      renderCell: (cellValue) => {
+        return (
+          <Grid
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <FolderIcon />
+            <Typography
+              sx={{
+                p: 1,
+              }}
+              color="#8a2b06"
+            >
+              {cellValue.row.name}
+            </Typography>
+          </Grid>
+        );
+      },
     },
     {
       field: "tags",
@@ -250,7 +280,7 @@ const DataDisp = () => {
           >
             <Button
               variant="contained"
-              startIcon={<CreateIcon />}
+              startIcon={<CreateNewFolderOutlinedIcon />}
               size="large"
               onClick={handleClickOpenForNewProject}
             >
@@ -364,6 +394,33 @@ const DataDisp = () => {
           <Button onClick={handleEditClose}>Save</Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={isCreated}
+        autoHideDuration={3000}
+        onClose={() => setCreated(false)}
+      >
+        <Alert severity="success" variant="filled" elevation={6}>
+          <strong>Success - </strong> New Project created !!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isDeleted}
+        autoHideDuration={3000}
+        onClose={() => setDeleted(false)}
+      >
+        <Alert severity="error" variant="filled" elevation={6}>
+          <strong>Alert - </strong> Project deleted !!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isEdited}
+        autoHideDuration={3000}
+        onClose={() => setEdited(false)}
+      >
+        <Alert severity="info" variant="filled" elevation={6}>
+          <strong>Success - </strong> Project edited !!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

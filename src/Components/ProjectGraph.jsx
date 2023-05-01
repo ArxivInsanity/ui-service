@@ -4,10 +4,11 @@ import axiosConfig from "../Util/AxiosConfig";
 import GraphComponent from "./GraphComponent";
 import Select from "react-select";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { RingLoader } from "react-spinners";
 
 const ProjectGraph = ({ paperId }) => {
   const [data, setData] = useState(null);
-
+  const [isLoading, setLoading] = useState(false);
   // filter states
   const [authorList, setAuthorList] = useState([]);
   const [authorFilterList, setAuthorFilterList] = useState([]);
@@ -16,40 +17,45 @@ const ProjectGraph = ({ paperId }) => {
   const [minCitation, setMinCitation] = useState(0);
 
   useEffect(() => {
-    axiosConfig
-      .get("api/graph/" + paperId)
-      .then((response) => {
-        console.log("Graph Data", response);
-        let graphData = response.data.data;
-        setData(graphData);
+    console.log("Project Grpah : ", paperId);
+    if (paperId) {
+      setLoading(true);
+      axiosConfig
+        .get("api/graph/" + paperId)
+        .then((response) => {
+          console.log("Graph Data", response);
+          let graphData = response.data.data;
+          setData(graphData);
 
-        // set filter params
-        let tmpAuthorList = [];
-        let maxYear = 0;
-        let minYear = 2023;
-        graphData?.nodes.map((node) => {
-          node.authorList.map((authorName) => tmpAuthorList.push(authorName));
-          if (node.year > maxYear) {
-            maxYear = node.year;
-          }
-          if (node.year < minYear) {
-            minYear = node.year;
-          }
+          // set filter params
+          let tmpAuthorList = [];
+          let maxYear = 0;
+          let minYear = 2023;
+          graphData?.nodes.map((node) => {
+            node.authorList.map((authorName) => tmpAuthorList.push(authorName));
+            if (node.year > maxYear) {
+              maxYear = node.year;
+            }
+            if (node.year < minYear) {
+              minYear = node.year;
+            }
+          });
+          let uniqueAuthorList = [...new Set(tmpAuthorList)];
+          setAuthorList(
+            uniqueAuthorList.map((author) => {
+              return { value: author, label: author };
+            })
+          );
+
+          console.log("Author Set: ", uniqueAuthorList);
+          setMinMaxYear([minYear, maxYear]);
+          console.log("MinMaxYear: ", minYear, maxYear);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log("Error Failed", error);
         });
-        let uniqueAuthorList = [...new Set(tmpAuthorList)];
-        setAuthorList(
-          uniqueAuthorList.map((author) => {
-            return { value: author, label: author };
-          })
-        );
-
-        console.log("Author Set: ", uniqueAuthorList);
-        setMinMaxYear([minYear, maxYear]);
-        console.log("MinMaxYear: ", minYear, maxYear);
-      })
-      .catch((error) => {
-        console.log("Error Failed", error);
-      });
+    }
   }, [paperId]);
 
   // handle onClick of apply filter
@@ -80,7 +86,32 @@ const ProjectGraph = ({ paperId }) => {
       {paperId !== "" ? (
         <Grid container spacing={1} direction="column">
           <Grid item xs={8}>
-            <GraphComponent data={data} />
+            {isLoading ? (
+              <Paper
+                sx={{
+                  width: "100%",
+                  height: 600,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <RingLoader loading={isLoading} size={300} color="maroon" />
+                <Typography
+                  sx={{
+                    m: 1,
+                    pl: 5,
+                    fontSize: 64,
+                    fontWeight: "bold",
+                  }}
+                  color="#8a2b06"
+                >
+                  Loading ....
+                </Typography>
+              </Paper>
+            ) : (
+              <GraphComponent data={data} />
+            )}
           </Grid>
           <Grid item xs={3}>
             <Paper sx={{ mt: 1, height: 100, boxShadow: 2 }}>

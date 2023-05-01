@@ -10,11 +10,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import IconButton from "@mui/material/IconButton";
 
-const SeedPaperList = ({ seedPapers }) => {
+const SeedPaperList = ({ seedPapers, setSeedPaperIdFunc }) => {
   console.log("Called in Seed Papers List : ", seedPapers);
   const columns = [
     {
-      field: "id",
+      field: "rowId",
       headerName: "#",
       flex: 0.1,
       minWidth: 20,
@@ -47,7 +47,7 @@ const SeedPaperList = ({ seedPapers }) => {
             <Box sx={{ display: "flex" }}>
               <IconButton
                 size="small"
-                onClick={() => console.log("Re-render Seed Paper Data")}
+                onClick={() => setSeedPaperIdFunc(params.row.id)}
                 color="info"
               >
                 <VisibilityIcon size="small" />
@@ -93,9 +93,10 @@ const SeedPaperList = ({ seedPapers }) => {
                     ?.filter((refPaper) => refPaper?.id?.length > 0)
                     ?.map((v, id) => ({
                       ...v,
-                      id: id + 1,
+                      rowId: id + 1,
                     })) ?? []
                 }
+                getRowId={(row) => row.rowId}
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}

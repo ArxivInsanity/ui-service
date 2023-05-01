@@ -36,7 +36,10 @@ const MainPage = ({ props }) => {
               <Paper sx={{ flexGrow: 1, borderRadius: 1 }}>
                 <PaperSearchBar setSeedPaperFunc={setSeedPaperId} />
                 {Object.keys(projectDetails?.seedPapers).length > 0 && (
-                  <SeedPaperList seedPapers={projectDetails?.seedPapers} />
+                  <SeedPaperList
+                    seedPapers={projectDetails?.seedPapers}
+                    setSeedPaperIdFunc={setSeedPaperId}
+                  />
                 )}
                 {seedPaperId !== "" ? (
                   <SeedPaperCard seedPaperId={seedPaperId} />

@@ -30,10 +30,6 @@ export function QuickSearchToolbar() {
   );
 }
 
-// const ListItem = styled("li")(({ theme }) => ({
-//   margin: theme.spacing(0.5),
-// }));
-
 const DataDisp = () => {
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = React.useState(false);
@@ -115,7 +111,6 @@ const DataDisp = () => {
     e.preventDefault();
     console.log("Open Project ", row.name);
     navigate("/project", { state: { data: row } });
-    // window.open("http://localhost:3000/projects/" + row.name, "_blank");
   };
 
   const [tableData, setTableData] = useState([]);
@@ -127,7 +122,6 @@ const DataDisp = () => {
         console.log("Got Collection Success", response);
         const results = response.data;
         console.log(results);
-        // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
         let tableData = [];
         results.map((result, id) => {
           return tableData.push({
@@ -136,6 +130,7 @@ const DataDisp = () => {
             lastModifiedAt: result.lastModifiedAt,
             description: result.description,
             tags: result.tags,
+            seedPapers: result.seedPapers,
           });
         });
         setTableData(tableData);
@@ -239,8 +234,6 @@ const DataDisp = () => {
   useEffect(() => {
     getTableData();
   }, []);
-
-  // console.log(tableData)
 
   return (
     <>

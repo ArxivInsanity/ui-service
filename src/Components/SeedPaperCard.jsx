@@ -7,6 +7,8 @@ import {
   IconButton,
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
@@ -14,13 +16,34 @@ import React, { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { DataGrid } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import PaperDetailsModal from "../Components/PaperDetailsModal"
+import PaperDetailsModal from "../Components/PaperDetailsModal";
 import axiosConfig from "../Util/AxiosConfig";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-const SeedPaperCard = ({ seedPaperDetails }) => {
+const SeedPaperCard = ({ seedPaperId }) => {
+  const [seedPaperDetails, setSeedPaperDetails] = useState({});
   const [seedPaperData, setSeedPaperData] = useState({});
   const [refData, setRefData] = useState({});
   const [openRead, setOpenRead] = React.useState(false);
+  const [bookmark, setBookmark] = React.useState(false);
+  const [savePaper, setSavePaper] = React.useState(false);
+
+  useEffect(() => {
+    setBookmark(false);
+    console.log("set Seed Paper Card Data : ", seedPaperId);
+    axiosConfig
+      .get("/api/papers/" + seedPaperId)
+      .then((response) => {
+        console.log("Response : ", response);
+        if (response?.data?.data !== null) {
+          setSeedPaperDetails(response?.data?.data);
+        }
+      })
+      .catch((error) => {
+        console.log("Error Failed", error);
+      });
+  }, [seedPaperId]);
 
   useEffect(() => {
     console.log("READING PANEL : ", seedPaperData);
@@ -90,7 +113,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
 
   return (
     <>
-      <Card sx={{ mt: 2 }}>
+      <Card sx={{ mt: 1 }}>
         <CardContent>
           <Stack
             direction="row"
@@ -101,32 +124,56 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           >
             <Typography
               sx={{
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "bold",
               }}
               color="#8a2b06"
             >
-              Seed Paper :
-              <br />
-              <Chip
-                label={seedPaperDetails?.year}
-                size="medium"
-                sx={{ color: "#8a2b06", alignItems: "right" }}
-              />
+              Title :
             </Typography>
-            <a href={seedPaperDetails?.url} target="_blank">
-              <OpenInNewIcon
-                sx={{
-                  color: "#8a2b06",
-                }}
-                fontSize="small"
-              />
-            </a>
+            <Stack direction="row" spacing={2}>
+              {bookmark === true ? (
+                <BookmarkIcon
+                  sx={{
+                    color: "#8a2b06",
+                  }}
+                  fontSize="small"
+                  onClick={() => setBookmark(false)}
+                />
+              ) : (
+                <BookmarkAddOutlinedIcon
+                  sx={{
+                    color: "#8a2b06",
+                  }}
+                  fontSize="small"
+                  onClick={() => {
+                    setBookmark(true);
+                    setSavePaper(true);
+                  }}
+                />
+              )}
+              <a href={seedPaperDetails?.url} target="_blank">
+                <OpenInNewIcon
+                  sx={{
+                    color: "#8a2b06",
+                  }}
+                  fontSize="small"
+                />
+              </a>
+            </Stack>
           </Stack>
 
-          <Typography sx={{ m: 1, fontSize: 14 }} color="text.secondary">
+          <Typography
+            sx={{ m: 1, fontSize: 14, fontWeight: "bold" }}
+            color="text.primary"
+          >
             {seedPaperDetails?.title}
           </Typography>
+          <Chip
+            label={"Year: " + seedPaperDetails?.year}
+            size="medium"
+            sx={{ mb: 1, fontWeight: "bold", color: "#8a2b06" }}
+          />
           <Divider />
           <Stack
             direction="row"
@@ -138,7 +185,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           >
             <Typography
               sx={{
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "bold",
               }}
               color="#8a2b06"
@@ -176,7 +223,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           >
             <Typography
               sx={{
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "bold",
               }}
               color="#8a2b06"
@@ -188,7 +235,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
             sx={{
               m: 1,
               fontSize: 14,
-              maxHeight: 80,
+              maxHeight: 120,
               overflowY: "scroll",
             }}
             color="text.secondary"
@@ -207,7 +254,7 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           >
             <Typography
               sx={{
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "bold",
               }}
               color="#8a2b06"
@@ -215,19 +262,18 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
               References :
             </Typography>
           </Stack>
-          {/* {console.log(
-            seedPaperDetails?.references?.map((v, id) => ({ ...v, id: id + 1 }))
-          )} */}
           <Box sx={{ m: 1 }}>
-            <div style={{ mt: 1, height: 250 }}>
+            <div style={{ mt: 1, height: 240 }}>
               <DataGrid
                 autoPageSize
                 pagination
                 rows={
-                  seedPaperDetails?.references?.map((v, id) => ({
-                    ...v,
-                    id: id + 1,
-                  })) ?? []
+                  seedPaperDetails?.references
+                    ?.filter((refPaper) => refPaper?.paperId?.length > 0)
+                    .map((v, id) => ({
+                      ...v,
+                      id: id + 1,
+                    })) ?? []
                 }
                 columns={columns}
                 pageSize={5}
@@ -238,7 +284,20 @@ const SeedPaperCard = ({ seedPaperDetails }) => {
           </Box>
         </CardContent>
       </Card>
-      <PaperDetailsModal openRead={openRead} handleClose={handleClose} refData={refData}/>
+      <PaperDetailsModal
+        openRead={openRead}
+        handleClose={handleClose}
+        refData={refData}
+      />
+      <Snackbar
+        open={savePaper}
+        autoHideDuration={1000}
+        onClose={() => setSavePaper(false)}
+      >
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Seed Paper Added!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

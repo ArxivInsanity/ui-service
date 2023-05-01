@@ -21,7 +21,12 @@ import axiosConfig from "../Util/AxiosConfig";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
+const SeedPaperCard = ({
+  seedPaperId,
+  setProjectListFunc,
+  projectName,
+  seedPapers,
+}) => {
   const [seedPaperDetails, setSeedPaperDetails] = useState({});
   const [seedPaperData, setSeedPaperData] = useState({});
   const [refData, setRefData] = useState({});
@@ -30,9 +35,14 @@ const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
   const [savePaper, setSavePaper] = React.useState(false);
 
   useEffect(() => {
-    setBookmark(false);
     console.log("set Seed Paper Card Data : ", seedPaperId);
+    setBookmark(false);
     if (seedPaperId?.length > 0) {
+      console.log("List of Seed Papers : ", seedPapers);
+      if (seedPapers?.filter((val) => val.id === seedPaperId)?.length > 0) {
+        console.log("Found");
+        setBookmark(true);
+      }
       axiosConfig
         .get("/api/papers/" + seedPaperId)
         .then((response) => {
@@ -45,7 +55,7 @@ const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
           console.log("Error Failed", error);
         });
     }
-  }, [seedPaperId]);
+  }, [seedPaperId, seedPapers]);
 
   useEffect(() => {
     console.log("READING PANEL : ", seedPaperData);
@@ -167,7 +177,7 @@ const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
                     color: "#8a2b06",
                   }}
                   fontSize="small"
-                  onClick={() => setBookmark(false)}
+                  // onClick={() => setBookmark(false)}
                 />
               ) : (
                 <BookmarkAddOutlinedIcon

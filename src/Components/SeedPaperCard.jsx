@@ -21,7 +21,7 @@ import axiosConfig from "../Util/AxiosConfig";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-const SeedPaperCard = ({ seedPaperId }) => {
+const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
   const [seedPaperDetails, setSeedPaperDetails] = useState({});
   const [seedPaperData, setSeedPaperData] = useState({});
   const [refData, setRefData] = useState({});
@@ -71,6 +71,31 @@ const SeedPaperCard = ({ seedPaperId }) => {
     console.log("Open Read Panel ", row);
     setSeedPaperData(row);
     setOpenRead(true);
+  };
+
+  const handleSavePaper = () => {
+    setBookmark(true);
+    setSavePaper(true);
+    axiosConfig
+      .put("api/projects/" + projectName + "/seedPapers", {
+        id: seedPaperId,
+        name: seedPaperDetails.title,
+      })
+      .then((response) => {
+        console.log("Added the seedPaper: ", response);
+        axiosConfig
+          .get("api/projects/" + projectName + "/seedPapers")
+          .then((response) => {
+            console.log("Fetched seed paper : ", response);
+            setProjectListFunc(response?.data);
+          })
+          .catch((error) => {
+            console.log("Error Failed", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Error Failed", error);
+      });
   };
 
   const columns = [
@@ -147,8 +172,7 @@ const SeedPaperCard = ({ seedPaperId }) => {
                   }}
                   fontSize="small"
                   onClick={() => {
-                    setBookmark(true);
-                    setSavePaper(true);
+                    handleSavePaper();
                   }}
                 />
               )}

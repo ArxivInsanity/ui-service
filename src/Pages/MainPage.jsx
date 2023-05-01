@@ -36,14 +36,14 @@ const MainPage = () => {
           <Grid sx={{ flexGrow: 1 }} container spacing={1}>
             <Grid item xs={4}>
               <PaperSearchBar setSeedPaperFunc={setSeedPaperId} />
-              {Object.keys(projectList).length > 0 && (
+              {/* {Object.keys(projectList).length > 0 && ( */}
                 <SeedPaperList
                   seedPapers={projectList}
                   setSeedPaperIdFunc={setSeedPaperId}
                   setProjectListFunc={setProjectList}
                   projectName={projectDetails?.name}
                 />
-              )}
+              {/* )} */}
               {seedPaperId !== "" && (
                 <SeedPaperCard
                   seedPaperId={seedPaperId}

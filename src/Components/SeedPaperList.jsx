@@ -9,9 +9,41 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import IconButton from "@mui/material/IconButton";
+import axiosConfig from "../Util/AxiosConfig";
 
-const SeedPaperList = ({ seedPapers, setSeedPaperIdFunc }) => {
+const SeedPaperList = ({
+  seedPapers,
+  setSeedPaperIdFunc,
+  setProjectListFunc,
+  projectName,
+}) => {
   console.log("Called in Seed Papers List : ", seedPapers);
+
+  const handleDeletePaper = (row) => {
+    axiosConfig
+      .delete("api/projects/" + projectName + "/seedPapers", {
+        data: {
+          id: row.id,
+          name: row.name,
+        },
+      })
+      .then((response) => {
+        console.log("Deleted the seedPaper: ", response);
+        axiosConfig
+          .get("api/projects/" + projectName + "/seedPapers")
+          .then((response) => {
+            console.log("Fetched seed paper : ", response);
+            setProjectListFunc(response?.data);
+          })
+          .catch((error) => {
+            console.log("Error Failed", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Error Failed", error);
+      });
+  };
+
   const columns = [
     {
       field: "rowId",
@@ -38,7 +70,7 @@ const SeedPaperList = ({ seedPapers, setSeedPaperIdFunc }) => {
             <Box sx={{ display: "flex" }}>
               <IconButton
                 size="small"
-                onClick={() => console.log("Delete Seed Paper")}
+                onClick={() => handleDeletePaper(params.row)}
                 color="warning"
               >
                 <DeleteIcon size="small" />

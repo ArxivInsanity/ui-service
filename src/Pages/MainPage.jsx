@@ -11,10 +11,12 @@ import SeedPaperList from "../Components/SeedPaperList";
 
 const MainPage = ({ props }) => {
   const [seedPaperId, setSeedPaperId] = useState("");
+  const [projectList, setProjectList] = useState([]);
   const projectDetails = useLocation().state.data;
   useEffect(() => {
     console.log("Main Page seeedPaperId called");
     setSeedPaperId(projectDetails?.seedPapers[0]?.id);
+    setProjectList(projectDetails?.seedPapers);
   }, [projectDetails]);
   console.log("STATE: ", projectDetails);
   return (
@@ -35,14 +37,16 @@ const MainPage = ({ props }) => {
             <Grid item xs={4}>
               <Paper sx={{ flexGrow: 1, borderRadius: 1 }}>
                 <PaperSearchBar setSeedPaperFunc={setSeedPaperId} />
-                {Object.keys(projectDetails?.seedPapers).length > 0 && (
+                {Object.keys(projectList).length > 0 && (
                   <SeedPaperList
-                    seedPapers={projectDetails?.seedPapers}
+                    seedPapers={projectList}
                     setSeedPaperIdFunc={setSeedPaperId}
+                    setProjectListFunc={setProjectList}
+                    projectName={projectDetails?.name}
                   />
                 )}
                 {seedPaperId !== "" ? (
-                  <SeedPaperCard seedPaperId={seedPaperId} />
+                  <SeedPaperCard seedPaperId={seedPaperId} setProjectListFunc={setProjectList} projectName={projectDetails?.name} />
                 ) : (
                   <Paper
                     id="container"

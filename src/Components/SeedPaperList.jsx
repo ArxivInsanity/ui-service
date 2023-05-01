@@ -167,8 +167,8 @@ const SeedPaperList = ({
         autoHideDuration={3000}
         onClose={() => setDelete(false)}
       >
-        <Alert severity="error" variant="filled" elevation={6}>
-          <strong>Alert - </strong> Seed Paper is Deleted !!
+        <Alert severity="success" variant="filled" elevation={6}>
+            Seed Paper is Deleted !!
         </Alert>
       </Snackbar>
     </>

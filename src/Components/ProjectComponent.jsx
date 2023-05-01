@@ -408,8 +408,8 @@ const DataDisp = () => {
         autoHideDuration={3000}
         onClose={() => setDeleted(false)}
       >
-        <Alert severity="error" variant="filled" elevation={6}>
-          <strong>Alert - </strong> Project deleted !!
+        <Alert severity="success" variant="filled" elevation={6}>
+          Project deleted !!
         </Alert>
       </Snackbar>
       <Snackbar

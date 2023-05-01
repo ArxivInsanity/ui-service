@@ -125,7 +125,7 @@ const ProjectGraph = ({ paperId }) => {
                     }}
                     color="#8a2b06"
                   >
-                    Auhtor
+                    Author
                   </Typography>
                   <Box sx={{ width: 300, pl: 1, mb: 1 }}>
                     <Select

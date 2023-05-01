@@ -32,32 +32,36 @@ const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
   useEffect(() => {
     setBookmark(false);
     console.log("set Seed Paper Card Data : ", seedPaperId);
-    axiosConfig
-      .get("/api/papers/" + seedPaperId)
-      .then((response) => {
-        console.log("Response : ", response);
-        if (response?.data?.data !== null) {
-          setSeedPaperDetails(response?.data?.data);
-        }
-      })
-      .catch((error) => {
-        console.log("Error Failed", error);
-      });
+    if (seedPaperId?.length > 0) {
+      axiosConfig
+        .get("/api/papers/" + seedPaperId)
+        .then((response) => {
+          console.log("Card Response : ", response);
+          if (response?.data?.data !== null) {
+            setSeedPaperDetails(response?.data?.data);
+          }
+        })
+        .catch((error) => {
+          console.log("Error Failed", error);
+        });
+    }
   }, [seedPaperId]);
 
   useEffect(() => {
     console.log("READING PANEL : ", seedPaperData);
-    axiosConfig
-      .get("/api/papers/" + seedPaperData.paperId)
-      .then((response) => {
-        console.log("Response : ", response);
-        if (response?.data?.data !== null) {
-          setRefData(response?.data?.data);
-        }
-      })
-      .catch((error) => {
-        console.log("Error Failed", error);
-      });
+    if (seedPaperData?.paperId?.length > 0) {
+      axiosConfig
+        .get("/api/papers/" + seedPaperData.paperId)
+        .then((response) => {
+          console.log("References Response : ", response);
+          if (response?.data?.data !== null) {
+            setRefData(response?.data?.data);
+          }
+        })
+        .catch((error) => {
+          console.log("Error Failed", error);
+        });
+    }
   }, [seedPaperData]);
 
   const handleClose = () => {
@@ -315,7 +319,7 @@ const SeedPaperCard = ({ seedPaperId, setProjectListFunc, projectName }) => {
       />
       <Snackbar
         open={savePaper}
-        autoHideDuration={1000}
+        autoHideDuration={3000}
         onClose={() => setSavePaper(false)}
       >
         <Alert severity="success" sx={{ width: "100%" }}>

@@ -9,7 +9,7 @@ import ProjectGraph from "../Components/ProjectGraph";
 import SeedPaperCard from "../Components/SeedPaperCard";
 import SeedPaperList from "../Components/SeedPaperList";
 
-const MainPage = ({ props }) => {
+const MainPage = () => {
   const [seedPaperId, setSeedPaperId] = useState("");
   const [projectList, setProjectList] = useState([]);
   const projectDetails = useLocation().state.data;

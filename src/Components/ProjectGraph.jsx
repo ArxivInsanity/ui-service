@@ -204,7 +204,7 @@ const ProjectGraph = ({ paperId }) => {
                         mt: 2,
                         fontSize: 14,
                         border: 1,
-                        boxShadow: 4,
+                        boxShadow: 2,
                       }}
                       onClick={applyFilterOnClick}
                       startIcon={<FilterAltIcon />}

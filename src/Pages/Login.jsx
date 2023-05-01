@@ -17,7 +17,7 @@ import Particles from "react-particles";
 const cardStyle = {
   display: "block",
   minWidth: "30%",
-  boxShadow: "3px 3px 3px 3px grey",
+  boxShadow: "0px 4px 5px -2px rgba(0,0,0,0.2), 0px 7px 10px 1px rgba(0,0,0,0.14), 0px 2px 16px 1px rgba(0,0,0,0.12)",
 };
 
 const getAuthGoogle = () => {

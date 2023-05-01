@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Paper,
-  Grid,
-  Box,
-  Slider,
-  Button,
-  Typography,
-  FormControl,
-} from "@mui/material";
+import { Paper, Grid, Box, Slider, Button, Typography } from "@mui/material";
 import axiosConfig from "../Util/AxiosConfig";
 import GraphComponent from "./GraphComponent";
 import Select from "react-select";
@@ -85,13 +77,13 @@ const ProjectGraph = ({ paperId }) => {
 
   return (
     <>
-      {paperId != "" ? (
+      {paperId !== "" ? (
         <Grid container spacing={1} direction="column">
           <Grid item xs={8}>
             <GraphComponent data={data} />
           </Grid>
           <Grid item xs={3}>
-            <Paper>
+            <Paper sx={{ mt: 1, height: 100, boxShadow: 2 }}>
               <Grid container spacing={1}>
                 <Grid item xs={4}>
                   <Typography
@@ -170,24 +162,25 @@ const ProjectGraph = ({ paperId }) => {
                     />
                   </Box>
                 </Grid>
-                <Grid container item xs={2} alignItems={"center"}>
-                  <Button
-                    id="apply-filter"
-                    alignItems={"center"}
-                    variant="outlined"
-                    size="medium"
-                    color="primary"
-                    sx={{
-                      mt: 2,
-                      fontSize: 10,
-                      border: 1,
-                      boxShadow: 10,
-                    }}
-                    onClick={applyFilterOnClick}
-                    startIcon={<FilterAltIcon />}
-                  >
-                    Apply Filter
-                  </Button>
+                <Grid container item xs={2}>
+                  <Box>
+                    <Button
+                      id="apply-filter"
+                      variant="outlined"
+                      size="medium"
+                      color="primary"
+                      sx={{
+                        mt: 2,
+                        fontSize: 14,
+                        border: 1,
+                        boxShadow: 4,
+                      }}
+                      onClick={applyFilterOnClick}
+                      startIcon={<FilterAltIcon />}
+                    >
+                      Apply Filter
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
             </Paper>

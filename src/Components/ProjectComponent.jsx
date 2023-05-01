@@ -5,7 +5,6 @@ import {
   GridToolbarContainer,
 } from "@mui/x-data-grid";
 import { MuiChipsInput } from "mui-chips-input";
-import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 
 import { Grid, IconButton, Button, Chip } from "@mui/material";
@@ -31,10 +30,6 @@ export function QuickSearchToolbar() {
   );
 }
 
-const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
-
 const DataDisp = () => {
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = React.useState(false);
@@ -51,10 +46,8 @@ const DataDisp = () => {
     setProjectName(row.name);
     setPrevProjectName(row.name);
     setProjectDescription(row.description);
-    if(row.tags === null) 
-      setProjectTags([]);
-    else
-      setProjectTags(row.tags);
+    if (row.tags === null) setProjectTags([]);
+    else setProjectTags(row.tags);
     setOpen(true);
   };
 
@@ -118,7 +111,6 @@ const DataDisp = () => {
     e.preventDefault();
     console.log("Open Project ", row.name);
     navigate("/project", { state: { data: row } });
-    // window.open("http://localhost:3000/projects/" + row.name, "_blank");
   };
 
   const [tableData, setTableData] = useState([]);
@@ -130,7 +122,6 @@ const DataDisp = () => {
         console.log("Got Collection Success", response);
         const results = response.data;
         console.log(results);
-        // setTableData({"id":1,"col1" :results[0].name,"col2" :results[0].lastModifiedAt});
         let tableData = [];
         results.map((result, id) => {
           return tableData.push({
@@ -139,6 +130,7 @@ const DataDisp = () => {
             lastModifiedAt: result.lastModifiedAt,
             description: result.description,
             tags: result.tags,
+            seedPapers: result.seedPapers,
           });
         });
         setTableData(tableData);
@@ -167,7 +159,7 @@ const DataDisp = () => {
     {
       field: "name",
       headerName: "Project Name",
-      flex: 1,
+      flex: 0.75,
       description: "The name of the project",
     },
     {
@@ -176,28 +168,38 @@ const DataDisp = () => {
       flex: 1,
       description: "Project Tags",
       renderCell: (cellValue) => {
-        if (cellValue.row.tags === null) return;
+        if (cellValue.row.tags.length === 0) return;
         else {
-          return cellValue.row.tags.map((data, id) => {
-            return (
-              <ListItem key={id}>
-                <Chip label={data} size="small" variant="outlined" />
-              </ListItem>
-            );
-          });
+          return (
+            <Grid container spacing={1}>
+              {cellValue.row.tags.map((data, id) => {
+                return (
+                  <Grid item key={id} xs={2}>
+                    <Chip
+                      label={data}
+                      size="small"
+                      variant="filled"
+                      sx={{ color: "#8a2b06", fontWeight: "bold" }}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          );
         }
       },
     },
     {
       field: "lastModifiedAt",
       headerName: "Last modified",
-      flex: 1,
+      flex: 0.5,
       description: "The last modified date of the project",
     },
     {
       field: "deleteAndEditButton",
       headerName: "Actions",
       description: "Actions column.",
+      flex: 0.4,
       sortable: false,
       width: 160,
       renderCell: (params) => {
@@ -233,94 +235,97 @@ const DataDisp = () => {
     getTableData();
   }, []);
 
-  // console.log(tableData)
-
   return (
-    <><Grid container spacing={2}>
-      <Grid item xs={2}></Grid>
-      <Grid item xs={8}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            mt: 2,
-          }}
-        >
-          <Button
-            variant="contained"
-            startIcon={<OpenInNewIcon />}
-            size="large"
-            onClick={handleClickOpenForNewProject}
-          >
-            New Project
-          </Button>
-          <Dialog open={openNew} onClose={handleCloseNew}>
-            <DialogTitle>Create new project</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                To add project, please enter the fields given below.
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Project Name"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)} />
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Project Description"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={projectDescription}
-                onChange={(e) => setProjectDescription(e.target.value)} />
-              <MuiChipsInput
-                autoFocus
-                margin="dense"
-                label="Project tags"
-                type="text"
-                fullWidth
-                variant="standard"
-                value={projectTags}
-                onChange={(chips) => setProjectTags(chips)} />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseNew}>Cancel</Button>
-              <Button onClick={onClickNewProject}>Create</Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
-        <Box sx={{ height: 500, width: "100%", mt: 3 }}>
-          <DataGrid
-            showCellRightBorder={true}
-            showColumnVerticalBorder={true}
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
+          <Box
             sx={{
-              boxShadow: 2,
-              border: 2,
-              borderColor: "warning.main",
-              "& .MuiDataGrid-cell:hover": {
-                color: "primary.main",
-              },
+              display: "flex",
+              justifyContent: "center",
+              mt: 2,
             }}
-            rows={tableData}
-            getRowId={(row) => row.name + row.lastModifiedAt}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            slots={{ toolbar: QuickSearchToolbar }} />
-        </Box>
+          >
+            <Button
+              variant="contained"
+              startIcon={<OpenInNewIcon />}
+              size="large"
+              onClick={handleClickOpenForNewProject}
+            >
+              New Project
+            </Button>
+            <Dialog open={openNew} onClose={handleCloseNew}>
+              <DialogTitle>Create new project</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  To add project, please enter the fields given below.
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label="Project Name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label="Project Description"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={projectDescription}
+                  onChange={(e) => setProjectDescription(e.target.value)}
+                />
+                <MuiChipsInput
+                  autoFocus
+                  margin="dense"
+                  label="Project tags"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={projectTags}
+                  onChange={(chips) => setProjectTags(chips)}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseNew}>Cancel</Button>
+                <Button onClick={onClickNewProject}>Create</Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+          <Box sx={{ height: 500, width: "100%", mt: 3 }}>
+            <DataGrid
+              showCellRightBorder={true}
+              showColumnVerticalBorder={true}
+              sx={{
+                boxShadow: 2,
+                border: 2,
+                borderColor: "warning.main",
+                "& .MuiDataGrid-cell:hover": {
+                  color: "primary.main",
+                },
+              }}
+              rows={tableData}
+              getRowId={(row) => row.name + row.lastModifiedAt}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              slots={{ toolbar: QuickSearchToolbar }}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={2}></Grid>
       </Grid>
-      <Grid item xs={2}></Grid>
-    </Grid><Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Project details</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To change the project details, please enter the fields given
-            below.
+            To change the project details, please enter the fields given below.
           </DialogContentText>
           <TextField
             autoFocus
@@ -330,7 +335,8 @@ const DataDisp = () => {
             fullWidth
             variant="standard"
             value={projectName}
-            onChange={(e) => setProjectName(e.target.value)} />
+            onChange={(e) => setProjectName(e.target.value)}
+          />
           <TextField
             autoFocus
             margin="dense"
@@ -339,22 +345,25 @@ const DataDisp = () => {
             fullWidth
             variant="standard"
             value={projectDescription}
-            onChange={(e) => setProjectDescription(e.target.value)} />
+            onChange={(e) => setProjectDescription(e.target.value)}
+          />
           <MuiChipsInput
             autoFocus
             margin="dense"
-            label="Project tags"
+            label="Tags"
             type="text"
             fullWidth
             variant="standard"
             value={projectTags}
-            onChange={(chips) => setProjectTags(chips)} />
+            onChange={(chips) => setProjectTags(chips)}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleEditClose}>Save</Button>
         </DialogActions>
-      </Dialog></>
+      </Dialog>
+    </>
   );
 };
 

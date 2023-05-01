@@ -39,13 +39,18 @@ const GraphComponent = ({ data }) => {
       });
       graph = new G6.Graph({
         container: "container",
-        height: 630,
+        height: 720,
         width: 950,
         // translate the graph to align the canvas's center, support by v3.5.1
+        animate: true,
+        animateCfg: {
+          duration: 500, // Number, the duration of one animation
+          easing: "linearEasing", // String, the easing function
+        },
         fitCenter: true,
         fitView: true,
         modes: {
-          default: ["drag-canvas", "drag-node"],
+          default: ["drag-canvas", "drag-node", "zoom-canvas"],
         },
         layout: {
           type: "force2",
@@ -78,6 +83,24 @@ const GraphComponent = ({ data }) => {
 
       graph.data(data);
       graph.render();
+
+      // Todo Animation
+      // setInterval(() => {
+      //   data.nodes.forEach((node) => {
+      //     node.x += Math.random() * 50 - 25;
+      //     node.y += Math.random() * 50 - 25;
+      //   });
+      //   graph.changeData(data);
+      // }, 900);
+
+      // const container = document.getElementById("container");
+      // if (typeof window !== "undefined")
+      //   window.onresize = () => {
+      //     if (!graph || graph.get("destroyed")) return;
+      //     if (!container || !container.scrollWidth || !container.scrollHeight)
+      //       return;
+      //     graph.changeSize(container.scrollWidth, container.scrollHeight);
+      //   };
 
       graph.on("node:mouseenter", (evt) => {
         const { item } = evt;

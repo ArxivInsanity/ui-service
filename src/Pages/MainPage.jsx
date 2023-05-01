@@ -14,7 +14,7 @@ const MainPage = () => {
   const [projectList, setProjectList] = useState([]);
   const projectDetails = useLocation().state.data;
   useEffect(() => {
-    console.log("Main Page seeedPaperId called");
+    console.log("Main Page called : ", projectDetails?.seedPapers);
     setSeedPaperId(projectDetails?.seedPapers[0]?.id);
     setProjectList(projectDetails?.seedPapers);
   }, [projectDetails]);
@@ -46,7 +46,12 @@ const MainPage = () => {
                   />
                 )}
                 {seedPaperId !== "" ? (
-                  <SeedPaperCard seedPaperId={seedPaperId} setProjectListFunc={setProjectList} projectName={projectDetails?.name} />
+                  <SeedPaperCard
+                    seedPaperId={seedPaperId}
+                    setProjectListFunc={setProjectList}
+                    projectName={projectDetails?.name}
+                    seedPapers={projectList}
+                  />
                 ) : (
                   <Paper
                     id="container"

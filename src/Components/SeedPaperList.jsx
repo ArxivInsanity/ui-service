@@ -106,8 +106,8 @@ const SeedPaperList = ({
           mr: 1,
           mb: 1,
           p: 0,
-          boxShadow: 6,
-          borderRadius: 2,
+          boxShadow: 2,
+          borderRadius: 1,
           "&.Mui-expanded": {
             fontSize: 14,
             marginTop: 1.5,
@@ -140,7 +140,7 @@ const SeedPaperList = ({
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ m: 1 }}>
-            <div style={{ mt: 1, height: 200 }}>
+            <div style={{ mt: 1, height: 190 }}>
               <DataGrid
                 autoPageSize
                 pagination

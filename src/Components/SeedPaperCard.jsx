@@ -20,6 +20,10 @@ import PaperDetailsModal from "../Components/PaperDetailsModal";
 import axiosConfig from "../Util/AxiosConfig";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const SeedPaperCard = ({
   seedPaperId,
@@ -178,15 +182,14 @@ const SeedPaperCard = ({
                   sx={{
                     color: "#8a2b06",
                   }}
-                  fontSize="small"
-                  // onClick={() => setBookmark(false)}
+                  fontSize="medium"
                 />
               ) : (
                 <BookmarkAddOutlinedIcon
                   sx={{
                     color: "#8a2b06",
                   }}
-                  fontSize="small"
+                  fontSize="medium"
                   onClick={() => {
                     handleSavePaper();
                   }}
@@ -197,7 +200,7 @@ const SeedPaperCard = ({
                   sx={{
                     color: "#8a2b06",
                   }}
-                  fontSize="small"
+                  fontSize="medium"
                 />
               </a>
             </Stack>
@@ -254,58 +257,90 @@ const SeedPaperCard = ({
                 );
               })}
           </Grid>
-          <Divider />
-          <Stack
-            direction="row"
-            sx={{
-              mt: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-              color="#8a2b06"
-            >
-              Abstract :
-            </Typography>
-          </Stack>
+          {seedPaperDetails?.abstract?.length > 0 && (
+            <>
+              <Divider />
+              <Stack
+                direction="row"
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                  }}
+                  color="#8a2b06"
+                >
+                  Abstract :
+                </Typography>
+              </Stack>
+              <Typography
+                sx={{
+                  mt: 1,
+                  ml: 1,
+                  mr: 1,
+                  p: 1,
+                  fontSize: 14,
+                  maxHeight: 120,
+                  border: 1,
+                  borderRadius: 1,
+                  overflowY: "scroll",
+                }}
+                color="text.secondary"
+                variant="body2"
+              >
+                {seedPaperDetails?.abstract}
+              </Typography>
+            </>
+          )}
+        </CardContent>
+      </Card>
+      <Accordion
+        sx={{
+          mt: 3,
+          ml: 1,
+          mr: 1,
+          mb: 1,
+          p: 0,
+          boxShadow: 8,
+          borderRadius: 1,
+          "&.Mui-expanded": {
+            fontSize: 14,
+            marginTop: 3,
+            marginLeft: 1,
+            marginRight: 1,
+            marginBottom: 1,
+          },
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          sx={{
+            height: 50,
+            "&.Mui-expanded": {
+              fontSize: 14,
+              minHeight: 30,
+              maxHeight: 50,
+            },
+          }}
+        >
           <Typography
             sx={{
-              m: 1,
-              fontSize: 14,
-              maxHeight: 120,
-              overflowY: "scroll",
+              fontSize: 16,
+              fontWeight: "bold",
             }}
-            color="text.secondary"
-            variant="body2"
+            color="#8a2b06"
           >
-            {seedPaperDetails?.abstract}
+            References :
           </Typography>
-          <Divider />
-          <Stack
-            direction="row"
-            sx={{
-              mt: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-              color="#8a2b06"
-            >
-              References :
-            </Typography>
-          </Stack>
+        </AccordionSummary>
+        <AccordionDetails>
           <Box sx={{ m: 1 }}>
-            <div style={{ mt: 1, height: 240 }}>
+            <div style={{ mt: 1, height: 190 }}>
               <DataGrid
                 autoPageSize
                 pagination
@@ -324,8 +359,8 @@ const SeedPaperCard = ({
               ></DataGrid>
             </div>
           </Box>
-        </CardContent>
-      </Card>
+        </AccordionDetails>
+      </Accordion>
       <PaperDetailsModal
         openRead={openRead}
         handleClose={handleClose}
